@@ -375,6 +375,13 @@ export const PAGES: PageDef[] = [
         { title: 'Earn', text: 'The customer earns points on what they paid, in their own currency, and sees them in their Elixir account.' },
         { title: 'Redeem', text: 'They spend points on rewards across the family, including with you.' },
       ],
+      servicesTitle: 'Everything a loyalty programme needs',
+      services: [
+        { title: 'Currency', text: 'Elixir Points are the one currency. You choose the earn rate for your brand, in each currency you sell in, and members spend them on rewards across the family.' },
+        { title: 'Programme management', text: 'We run the points ledger, balances, tiers and refunds, so you do not have to build or maintain a loyalty system.' },
+        { title: 'Simple integration', text: 'Your site sends each order and refund to us through a secure key. We give you the key and help your developers connect it.' },
+        { title: 'Partnership marketing', text: 'Run bonus-points offers with us, such as a double-points week on a product, to bring customers back at the right time.' },
+      ],
       note: 'Loyalty is live across the Sparkthunder family. We are opening it up to outside partners gradually, so get in touch to talk about your brand.',
     },
     {
@@ -394,6 +401,8 @@ export const PAGES: PageDef[] = [
         { title: 'We bring it together', text: 'Orders from across the coalition are combined into one picture.' },
         { title: 'You act on it', text: 'Use what you learn to plan offers, launches and campaigns.' },
       ],
+      servicesTitle: '',
+      services: [],
       note: 'Insights are in development. Early partners will help shape them, so tell us what you would want to see.',
     },
     {
@@ -413,6 +422,8 @@ export const PAGES: PageDef[] = [
         { title: 'Choose your audience', text: 'Reach members who fit, using only information they have agreed to share.' },
         { title: 'Launch and learn', text: 'Go live, then see what worked.' },
       ],
+      servicesTitle: '',
+      services: [],
       note: 'Media is in development. Tell us what you would like to promote and we will let you know as it opens.',
     },
   ].map((d): PageDef => ({
@@ -429,6 +440,13 @@ export const PAGES: PageDef[] = [
         ],
       },
       {
+        id: 'services', label: 'Services (leave empty to hide)',
+        fields: [
+          text('title', 'Section heading', d.servicesTitle),
+          list('items', 'Services', 'service', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], d.services),
+        ],
+      },
+      {
         id: 'steps', label: 'How it works',
         fields: [
           text('title', 'Section heading', d.stepsTitle),
@@ -440,6 +458,43 @@ export const PAGES: PageDef[] = [
     ],
   })),
   // -------------------------------------------------------------------------
+  {
+    slug: 'business-about', title: 'Elixir 360: About', path: '/business/about', description: 'About Elixir 360 and the Elixir Points programme.',
+    groups: [
+      seo('About Elixir 360', 'Elixir 360 is the business side of Elixir Points, the rewards programme of the Sparkthunder family of brands.'),
+      intro('About Elixir 360', 'Elixir 360 is the business side of Elixir Points, the rewards programme of the Sparkthunder family of brands.'),
+      {
+        id: 'story', label: 'Our story',
+        fields: [
+          text('title', 'Heading', 'One rewards balance, many brands'),
+          area('text', 'Text', 'Elixir Points began inside the Sparkthunder family, where comics, beauty, games and a shop all share one set of customers who love what they do. One points balance across all of them means every purchase has a reason to lead to the next. Elixir 360 opens that idea up to partners.'),
+        ],
+      },
+      {
+        id: 'what', label: 'What we do',
+        fields: [
+          text('title', 'Heading', 'What we do'),
+          list('items', 'Points', 'point', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
+            { title: 'We run the loyalty programme', text: 'Points, tiers, rewards and refunds, run for you.' },
+            { title: 'We connect brands and customers', text: 'Members earn with one brand and spend with another.' },
+            { title: 'We build for the long term', text: 'Insights and media services are being built on the same foundation, with customer permission at the centre.' },
+          ]),
+        ],
+      },
+      {
+        id: 'principles', label: 'How we work',
+        fields: [
+          text('title', 'Heading', 'How we work'),
+          list('items', 'Principles', 'principle', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
+            { title: 'Honest about what is live', text: 'We tell you plainly what is available now and what is still being built.' },
+            { title: 'Privacy first', text: 'Customer data is only used with permission, and no payment details ever reach us.' },
+            { title: 'Every point accounted for', text: 'Points live in a tamper-proof ledger that can be audited.' },
+          ]),
+        ],
+      },
+      { id: 'cta', label: 'Call to action', fields: [text('title', 'Heading', 'Want to work with us?'), text('button', 'Button', 'Become a partner')] },
+    ],
+  },
   {
     slug: 'business-contact', title: 'Elixir 360: Become a partner', path: '/business/contact', description: 'The enquiry form for businesses and partners.',
     groups: [

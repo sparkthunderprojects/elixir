@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import JsonLd from '@/components/json-ld';
+import BusinessNav from '@/components/business-nav';
 import PageShell from '@/components/page-shell';
 import { ButtonLink, SectionTitle } from '@/components/ui';
 import { SITE_URL } from '@/lib/site';
@@ -9,8 +10,11 @@ function pillar(path: string, interest: string) {
   return function PillarView({ c }: ViewProps) {
     const benefits = c.list<{ title: string; text: string }>('benefits.items');
     const steps = c.list<{ title: string; text: string }>('steps.items');
+    const services = c.list<{ title: string; text: string }>('services.items');
     const live = c.t('status.label').toLowerCase().includes('now');
     return (
+      <>
+      <BusinessNav current={path} />
       <PageShell title={c.t('intro.title')} intro={c.t('intro.text')} path={path}>
         <JsonLd data={{
           '@context': 'https://schema.org', '@type': 'BreadcrumbList',
@@ -31,6 +35,19 @@ function pillar(path: string, interest: string) {
             </li>
           ))}
         </ul>
+        {services.length > 0 && (
+          <>
+            <div className="mt-16"><SectionTitle>{c.t('services.title')}</SectionTitle></div>
+            <ul className="mt-8 grid gap-5 sm:grid-cols-2">
+              {services.map((s, i) => (
+                <li key={`${i}-${s.title}`} className="card-depth lift rounded-3xl p-6 sm:p-8">
+                  <h3 className="text-lg font-extrabold text-deep">{s.title}</h3>
+                  <p className="mt-2 text-body">{s.text}</p>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         <div className="mt-16"><SectionTitle>{c.t('steps.title')}</SectionTitle></div>
         <ol className="mt-8 grid gap-5 md:grid-cols-3">
           {steps.map((s, i) => (
@@ -48,6 +65,7 @@ function pillar(path: string, interest: string) {
           <Link href="/business" className="text-sm font-semibold text-white/80 underline underline-offset-4 hover:text-white">{c.t('cta.back')}</Link>
         </div>
       </PageShell>
+      </>
     );
   };
 }

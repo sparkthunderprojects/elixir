@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import PageShell from '@/components/page-shell';
+import BusinessNav from '@/components/business-nav';
 import BrandTile from '@/components/brand-tile';
 import { ButtonLink, SectionTitle } from '@/components/ui';
 import { brandLooks, sortBrands } from '@/lib/brands';
@@ -29,6 +29,8 @@ export default function BusinessView({ p, c, site }: ViewProps) {
   const looks = brandLooks(site);
   const brands = sortBrands(p.brands);
   return (
+    <>
+    <BusinessNav current="/business" />
     <div className="mx-auto max-w-none px-4 pt-6 sm:px-6">
       <div className="hero-deep relative overflow-hidden rounded-3xl px-6 py-14 text-white sm:px-12 sm:py-20">
         <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
@@ -103,5 +105,6 @@ export default function BusinessView({ p, c, site }: ViewProps) {
         <ButtonLink href="/business/contact">{c.t('cta.button')}</ButtonLink>
       </div>
     </div>
+    </>
   );
 }
