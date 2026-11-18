@@ -16,18 +16,18 @@ export default async function HowItWorks() {
   ];
   return (
     <PageShell title="How Elixir Points works" intro="One balance, every Sparkthunder brand. Four simple steps." path="/how-it-works">
-      <div className="space-y-8">
+      <div className="grid gap-5 sm:grid-cols-2">
         {sections.map((s) => (
-          <section key={s.h}>
-            <h2 className="text-xl font-bold text-navy">{s.h}</h2>
-            <p className="mt-2 max-w-3xl text-slate-600">{s.t}</p>
+          <section key={s.h} className="rounded-3xl bg-white p-6 sm:p-8">
+            <h2 className="text-xl font-bold text-deep">{s.h}</h2>
+            <p className="mt-2 max-w-3xl text-body">{s.t}</p>
           </section>
         ))}
       </div>
       <p className="mt-10 flex flex-wrap gap-4">
-        <Link href="/tiers" className="font-medium text-elixir hover:underline">Compare the tiers</Link>
-        <Link href="/rewards" className="font-medium text-elixir hover:underline">Browse rewards</Link>
-        <Link href="/faq" className="font-medium text-elixir hover:underline">Read the FAQ</Link>
+        <Link href="/tiers" className="font-bold text-elixir underline underline-offset-4">Compare the tiers</Link>
+        <Link href="/rewards" className="font-bold text-elixir underline underline-offset-4">Browse rewards</Link>
+        <Link href="/faq" className="font-bold text-elixir underline underline-offset-4">Read the FAQ</Link>
       </p>
     </PageShell>
   );

@@ -41,18 +41,18 @@ export default function HeaderAuth() {
     router.refresh();
   };
 
-  if (email === undefined) return <span className="h-9 w-24" aria-hidden="true" />;
+  if (email === undefined) return <span className="h-10 w-28" aria-hidden="true" />;
   if (email) {
     return (
-      <button onClick={signOut} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+      <button onClick={signOut} className="inline-flex items-center gap-2 rounded-xl border-2 border-elixir px-4 py-2 text-sm font-bold text-elixir hover:bg-elixir/5">
         <LogOut className="h-4 w-4" /> Sign out
       </button>
     );
   }
   return (
     <>
-      <Link href="/login" className="rounded-lg px-3 py-1.5 text-sm font-medium text-navy hover:bg-slate-100">Sign in</Link>
-      <Link href="/signup" className="rounded-lg bg-elixir px-4 py-1.5 text-sm font-semibold text-white hover:bg-elixir-dark">Join free</Link>
+      <Link href="/login" className="hidden rounded-xl border-2 border-elixir px-4 py-2 text-sm font-bold text-elixir hover:bg-elixir/5 sm:inline-block">Sign in</Link>
+      <Link href="/signup" className="rounded-xl bg-elixir px-4 py-2.5 text-sm font-bold text-white hover:bg-elixir-dark">Join free</Link>
     </>
   );
 }

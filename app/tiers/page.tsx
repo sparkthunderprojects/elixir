@@ -19,19 +19,19 @@ export default async function Tiers() {
       }} />
       <div className="grid gap-5 sm:grid-cols-2">
         {p.tiers.map((t) => (
-          <section key={t.id} id={t.id} className="rounded-2xl border border-slate-200 p-6">
+          <section key={t.id} id={t.id} className="rounded-3xl bg-white p-6 sm:p-8">
             <h2 className="text-xl font-bold" style={{ color: t.color }}>{t.name}</h2>
-            <p className="mt-1 text-sm text-slate-600">{t.min_spend_gbp === 0 ? 'Everyone starts here' : `Spend ${gbp(t.min_spend_gbp)} in ${p.tier_window_months} months`}</p>
-            <p className="mt-4 text-2xl font-extrabold text-navy">{t.earn_multiplier}x <span className="text-base font-medium text-slate-500">points on every £1</span></p>
+            <p className="mt-1 text-sm text-body">{t.min_spend_gbp === 0 ? 'Everyone starts here' : `Spend ${gbp(t.min_spend_gbp)} in ${p.tier_window_months} months`}</p>
+            <p className="mt-4 text-2xl font-extrabold text-deep">{t.earn_multiplier}x <span className="text-base font-medium text-body">points on every £1</span></p>
             {t.perks.length > 0 && (
-              <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-slate-600">
+              <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-body">
                 {t.perks.map((perk) => <li key={perk}>{perk}</li>)}
               </ul>
             )}
           </section>
         ))}
       </div>
-      <p className="mt-10"><Link href="/signup" className="rounded-lg bg-elixir px-6 py-3 font-semibold text-white hover:bg-elixir-dark">Join free and start earning</Link></p>
+      <p className="mt-10"><Link href="/signup" className="inline-flex rounded-xl bg-elixir px-6 py-3.5 text-sm font-bold text-white hover:bg-elixir-dark">Join free and start earning</Link></p>
     </PageShell>
   );
 }

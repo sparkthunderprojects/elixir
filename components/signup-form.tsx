@@ -55,14 +55,14 @@ export default function SignupForm({ next }: { next?: string }) {
   return (
     <form onSubmit={submit} className="space-y-4">
       <label className="block text-sm font-medium text-slate-700">Email
-        <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-elixir focus:outline-none focus:ring-2 focus:ring-elixir/20" />
+        <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm focus:border-elixir focus:outline-none focus:ring-2 focus:ring-elixir/20" />
       </label>
       <label className="block text-sm font-medium text-slate-700">Password
-        <input type="password" autoComplete="new-password" minLength={8} required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm focus:border-elixir focus:outline-none focus:ring-2 focus:ring-elixir/20" />
+        <input type="password" autoComplete="new-password" minLength={8} required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 w-full rounded-xl border border-black/15 px-3.5 py-2.5 text-sm focus:border-elixir focus:outline-none focus:ring-2 focus:ring-elixir/20" />
         <span className="mt-1 block text-xs font-normal text-slate-500">At least 8 characters.</span>
       </label>
       {error && <p role="alert" className="rounded-lg bg-danger-50 p-3 text-sm text-danger-700">{error}</p>}
-      <button type="submit" disabled={busy} className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-elixir px-4 py-2.5 font-semibold text-white hover:bg-elixir-dark disabled:opacity-60">
+      <button type="submit" disabled={busy} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-elixir px-4 py-3 font-bold text-white hover:bg-elixir-dark disabled:opacity-60">
         {busy && <Loader2 className="h-4 w-4 animate-spin" />}Create account
       </button>
       <p className="text-xs text-slate-500">

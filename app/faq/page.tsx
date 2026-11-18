@@ -22,11 +22,11 @@ export default async function Faq() {
   return (
     <PageShell title="Elixir Points FAQ" intro="Quick answers about earning, tiers and rewards." path="/faq">
       <JsonLd data={{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })) }} />
-      <dl className="space-y-6">
+      <dl className="grid gap-4">
         {items.map((i) => (
-          <div key={i.q}>
-            <dt className="text-lg font-bold text-navy"><h2>{i.q}</h2></dt>
-            <dd className="mt-1 max-w-3xl text-slate-600">{i.a}</dd>
+          <div key={i.q} className="rounded-3xl bg-white p-6 sm:p-8">
+            <dt className="text-lg font-bold text-deep"><h2>{i.q}</h2></dt>
+            <dd className="mt-1 max-w-3xl text-body">{i.a}</dd>
           </div>
         ))}
       </dl>
