@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SignupForm from '@/components/signup-form';
 
-export const metadata = { title: 'Join Elixir Points' };
+export const metadata = { title: 'Join Elixir Points', robots: { index: false, follow: false } };
 
 export default function Page({ searchParams }: { searchParams?: { next?: string } }) {
   return (

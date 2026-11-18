@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import LoginForm from '@/components/login-form';
 
-export const metadata = { title: 'Sign in' };
+export const metadata = { title: 'Sign in', robots: { index: false, follow: false } };
 
 export default function Page({ searchParams }: { searchParams?: { next?: string } }) {
   return (
