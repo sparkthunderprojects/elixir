@@ -47,7 +47,7 @@ export async function getProgramme(): Promise<Programme> {
       method: 'POST',
       headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' },
       body: '{}',
-      next: { revalidate: 300 },
+      next: { revalidate: 300, tags: ['programme'] },
     });
     if (!res.ok) return FALLBACK;
     const p = (await res.json()) as Programme;

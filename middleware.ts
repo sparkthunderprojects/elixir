@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   if (!configured) return response;
   const path = request.nextUrl.pathname;
   const isAdmin = path === '/admin' || path.startsWith('/admin/');
-  if (isAdmin && !user) return redirectWithCookies(request, response, '/login?next=/admin');
+  if (isAdmin && !user) return redirectWithCookies(request, response, `/login?next=${encodeURIComponent(path)}`);
   if (!isAdmin && user && (path === '/login' || path === '/signup')) {
     return redirectWithCookies(request, response, '/');
   }

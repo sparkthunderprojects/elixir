@@ -1,23 +1,30 @@
+import type { Content } from '@/lib/cms/resolve';
+import type { ImageValue } from '@/lib/cms/schema';
+
 /**
- * Presentation details for the brands on the site, keyed by the brand's slug in the
- * Elixir database. The database decides WHICH brands are active; this decides how they look.
- * A brand with no entry here still appears, as a plain text tile.
+ * How each brand looks on the site, keyed by the brand's slug in the Elixir database.
+ * The dashboard decides WHICH brands are active; the CMS (Site-wide > Brand logos) decides how they look.
+ * A brand with no entry still appears, as a plain text tile.
  */
 export interface BrandLook {
   tagline: string;
-  logo?: { src: string; width: number; height: number };
+  logo?: ImageValue;
   /** Background behind the logo, chosen so each logo reads clearly. */
   tile: string;
   /** Public website, only where it is known. */
   href?: string;
 }
 
-export const BRAND_LOOKS: Record<string, BrandLook> = {
-  'sparkthunder-shop': { tagline: 'The official Sparkthunder store', logo: { src: '/brands/sparkthunder-shop.png', width: 438, height: 120 }, tile: '#000000', href: 'https://sparkthunder.shop' },
-  knightverge: { tagline: 'Comics, characters and the Knightverge universe', logo: { src: '/brands/knightverge.png', width: 560, height: 125 }, tile: '#17130b', href: 'https://knightverge.com' },
-  'roll-combat': { tagline: 'Tabletop RPG games', logo: { src: '/brands/roll-combat.png', width: 560, height: 444 }, tile: '#ffffff' },
-  'miss-petty': { tagline: 'Beauty and makeup', logo: { src: '/brands/miss-petty.png', width: 560, height: 247 }, tile: '#ffffff' },
-};
+export type BrandLooks = Record<string, BrandLook>;
+
+export function brandLooks(site: Content): BrandLooks {
+  const out: BrandLooks = {};
+  for (const b of site.list<{ slug: string; tagline: string; logo: ImageValue; tile: string; href: string }>('brands.items')) {
+    if (!b.slug) continue;
+    out[b.slug] = { tagline: b.tagline, logo: b.logo?.src ? b.logo : undefined, tile: b.tile || '#ffffff', href: b.href || undefined };
+  }
+  return out;
+}
 
 const ORDER = ['sparkthunder-shop', 'knightverge', 'roll-combat', 'miss-petty'];
 

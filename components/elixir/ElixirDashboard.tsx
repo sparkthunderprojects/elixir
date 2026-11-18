@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, type ReactNode } from "react";
-import { Award, Coins, Crown, Gift, History, KeyRound, LogOut, Settings, TrendingUp, Users, CheckCircle2, Wallet } from "lucide-react";
+import Link from "next/link";
+import { Award, Coins, Crown, Gift, History, KeyRound, LogOut, Settings, TrendingUp, PenSquare, Users, CheckCircle2, Wallet } from "lucide-react";
 import { api, useAsync } from "@/lib/elixir";
 import { useAuth } from "./session";
 import { formatCurrency, formatNumber } from "@/lib/elixir-format";
@@ -30,6 +31,7 @@ export function ElixirDashboard() {
         <Tab id="rewards" view={view} set={setView} icon={<Gift className="h-4 w-4" />} label="Rewards" />
         <Tab id="adjustments" view={view} set={setView} icon={<History className="h-4 w-4" />} label="Adjustments" />
         {isAdmin && <Tab id="brands" view={view} set={setView} icon={<KeyRound className="h-4 w-4" />} label="Brands & Keys" />}
+        <Link href="/admin/content" className="flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-slate-600 transition-all hover:bg-slate-50"><PenSquare className="h-4 w-4" />Website content</Link>
         {isAdmin && <Tab id="settings" view={view} set={setView} icon={<Settings className="h-4 w-4" />} label="Settings" />}
       </div>
 

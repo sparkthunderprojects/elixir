@@ -2,14 +2,13 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NAV } from '@/lib/site';
 
 /** Desktop navigation with an underline on the current page. */
-export default function NavLinks() {
+export default function NavLinks({ items }: { items: { href: string; label: string }[] }) {
   const path = usePathname() ?? '/';
   return (
     <nav aria-label="Main" className="hidden h-full items-stretch gap-1 md:flex">
-      {NAV.map((n) => {
+      {items.map((n) => {
         const active = path === n.href;
         return (
           <Link key={n.href} href={n.href} aria-current={active ? 'page' : undefined}

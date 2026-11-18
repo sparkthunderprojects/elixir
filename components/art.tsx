@@ -12,7 +12,7 @@ export function Droplet({ className, style }: { className?: string; style?: CSSP
 }
 
 /** A phone showing an example Elixir balance. Illustrative, labelled as an example. */
-export function PhoneMock({ p }: { p: Programme }) {
+export function PhoneMock({ p, note = 'Example balance' }: { p: Programme; note?: string }) {
   const tier = p.tiers[0];
   const next = p.tiers[1];
   const points = 1000;
@@ -47,7 +47,7 @@ export function PhoneMock({ p }: { p: Programme }) {
           ))}
         </div>
       </div>
-      <p className="mt-3 text-center text-[11px] text-white/50">Example balance</p>
+      <p className="mt-3 text-center text-[11px] text-white/50">{note}</p>
     </div>
   );
 }

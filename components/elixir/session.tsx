@@ -36,7 +36,7 @@ export default function ElixirSession({ children }: { children: ReactNode }) {
     supabase.auth.getUser().then(async ({ data }) => {
       if (!active) return;
       if (!data.user) {
-        router.replace('/login?next=/admin');
+        router.replace('/login?next=' + encodeURIComponent(window.location.pathname));
         return;
       }
       try {
