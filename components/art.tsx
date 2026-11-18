@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import type { Programme } from '@/lib/programme';
 import { gbp, num } from '@/lib/programme';
 
-/** The Elixir droplet, drawn in SVG so it stays sharp at any size. Tinted by the text colour, with a glossy finish. */
+/** The Elixir droplet, drawn in SVG so it stays sharp at any size. Tinted by the text colour, with a glossy finish. Always carries the white "e", so every drop on the site is the brand mark. */
 export function Droplet({ className, style }: { className?: string; style?: CSSProperties }) {
   const d = 'M50 4C50 4 8 56 8 86a42 42 0 0 0 84 0C92 56 50 4 50 4Z';
   return (
@@ -12,10 +12,13 @@ export function Droplet({ className, style }: { className?: string; style?: CSSP
           <stop offset="0" stopColor="#fff" stopOpacity="0.5" /><stop offset="0.45" stopColor="#fff" stopOpacity="0" /><stop offset="1" stopColor="#000" stopOpacity="0.4" />
         </linearGradient>
         <linearGradient id="dp-gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff" stopOpacity="0.7" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></linearGradient>
+        <linearGradient id="dp-e" x1="50" y1="66" x2="50" y2="108" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fff" /><stop offset="1" stopColor="#ffe4e1" /></linearGradient>
+        <filter id="dp-es" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="2.2" stdDeviation="1.6" floodColor="#5a0a18" floodOpacity="0.55" /></filter>
       </defs>
       <path d={d} fill="currentColor" />
       <path d={d} fill="url(#dp-shade)" />
       <path d="M47 13C35 31 20 52 16.5 72c-.5 3-.4 6 .6 9 1.2-22 14-42 32-61Z" fill="url(#dp-gloss)" />
+      <path d="M31 88H69A19 19 0 1 0 63.4 101.4" fill="none" stroke="url(#dp-e)" strokeWidth="10.5" strokeLinecap="round" strokeLinejoin="round" filter="url(#dp-es)" />
     </svg>
   );
 }

@@ -21,8 +21,8 @@ export default function HomeView({ p, c, site }: ViewProps) {
       {/* Hero */}
       <section className="hero-deep relative overflow-hidden rounded-3xl">
         <span aria-hidden="true" className="glow-ring pulse-glow -right-10 top-0 h-80 w-80 bg-elixir/50" />
-        <Droplet className="float-slow drop-glow pointer-events-none absolute -left-4 bottom-8 h-24 w-20 text-elixir/80" />
-        <Droplet className="float-slower drop-glow pointer-events-none absolute right-[42%] top-8 h-14 w-11 text-elixir-light/70" />
+        <Droplet className="float-slow drop-glow pointer-events-none absolute -left-4 bottom-8 h-24 w-20 text-elixir" />
+        <Droplet className="float-slower drop-glow pointer-events-none absolute right-[42%] top-8 h-14 w-11 text-elixir-light" />
         <Droplet className="float-slow drop-glow pointer-events-none absolute right-6 top-16 h-28 w-20 text-elixir" />
         <div className="relative grid items-center gap-10 px-6 py-14 sm:px-12 md:grid-cols-[1.1fr_0.9fr] md:py-20">
           <div>
@@ -43,7 +43,7 @@ export default function HomeView({ p, c, site }: ViewProps) {
 
       {/* Brands */}
       <section aria-labelledby="brands" className="relative overflow-hidden rounded-3xl bg-[radial-gradient(60%_120%_at_85%_0%,#ee6674,transparent_60%),linear-gradient(135deg,#d03a4c,#bd3141_50%,#8a1d2c)] px-6 py-10 shadow-[0_30px_50px_-28px_rgba(138,29,44,0.8),inset_0_1px_0_rgba(255,255,255,0.25)] sm:px-12">
-        <Droplet className="pointer-events-none absolute -right-6 -top-6 h-44 w-36 -rotate-12 text-white/10" />
+        <Droplet className="pointer-events-none absolute -right-6 -top-6 h-44 w-36 -rotate-12 text-elixir-light opacity-25" />
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 id="brands" className="text-3xl font-extrabold !text-white sm:text-4xl">{c.t('brands.title')}</h2>
           <Link href="/brands" className="text-sm font-bold text-white underline underline-offset-4">{c.t('brands.link')}</Link>
