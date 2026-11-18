@@ -13,7 +13,7 @@ export interface BrandLook {
 }
 
 export const BRAND_LOOKS: Record<string, BrandLook> = {
-  'sparkthunder-shop': { tagline: 'The official Sparkthunder store', tile: '#ffffff', href: 'https://sparkthunder.shop' },
+  'sparkthunder-shop': { tagline: 'The official Sparkthunder store', logo: { src: '/brands/sparkthunder-shop.png', width: 438, height: 120 }, tile: '#000000', href: 'https://sparkthunder.shop' },
   knightverge: { tagline: 'Comics, characters and the Knightverge universe', logo: { src: '/brands/knightverge.png', width: 560, height: 125 }, tile: '#17130b', href: 'https://knightverge.com' },
   'roll-combat': { tagline: 'Tabletop RPG games', logo: { src: '/brands/roll-combat.png', width: 560, height: 444 }, tile: '#ffffff' },
   'miss-petty': { tagline: 'Beauty and makeup', logo: { src: '/brands/miss-petty.png', width: 560, height: 247 }, tile: '#ffffff' },
