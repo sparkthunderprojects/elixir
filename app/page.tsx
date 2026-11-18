@@ -18,7 +18,7 @@ export default async function HomePage() {
   const p = await getProgramme();
   const top = p.tiers[p.tiers.length - 1];
   return (
-    <div className="mx-auto max-w-[1200px] space-y-5 px-4 pt-6 sm:px-6">
+    <div className="mx-auto max-w-none space-y-5 px-4 pt-6 sm:px-6">
       <JsonLd data={{ '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${SITE_URL}/#webpage`, url: SITE_URL, name: 'Elixir Points', description: SITE_DESCRIPTION, isPartOf: { '@id': `${SITE_URL}/#website` } }} />
 
       {/* Hero */}

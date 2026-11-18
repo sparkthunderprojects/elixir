@@ -8,7 +8,7 @@ import { SITE_URL } from '@/lib/site';
 export default function PageShell({ title, intro, path, children }: { title: string; intro: string; path: string; children: ReactNode }) {
   const crumbs = [{ name: 'Home', url: SITE_URL + '/' }, { name: title, url: SITE_URL + path }];
   return (
-    <div className="mx-auto max-w-[1200px] px-4 pt-6 sm:px-6">
+    <div className="mx-auto max-w-none px-4 pt-6 sm:px-6">
       <JsonLd data={{
         '@context': 'https://schema.org', '@type': 'BreadcrumbList',
         itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.url })),

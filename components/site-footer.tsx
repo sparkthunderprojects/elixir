@@ -7,7 +7,7 @@ export default function SiteFooter() {
   const head = 'text-sm font-bold text-deep';
   return (
     <footer className="mt-20 border-t border-black/5 bg-white">
-      <div className="mx-auto grid max-w-[1200px] gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-none gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div>
           <p className={head}>Explore</p>
           <ul className="mt-4 space-y-3">{NAV.map((n) => <li key={n.href}><Link href={n.href} className={col}>{n.label}</Link></li>)}</ul>
@@ -34,7 +34,7 @@ export default function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-black/5">
-        <div className="mx-auto flex max-w-[1200px] items-center justify-between px-4 py-5 text-xs text-body sm:px-6">
+        <div className="mx-auto flex max-w-none items-center justify-between px-4 py-5 text-xs text-body sm:px-6">
           <p>© {new Date().getFullYear()} Elixir Points. All rights reserved.</p>
           <Link href="/admin" rel="nofollow" className="hover:text-elixir">Staff</Link>
         </div>

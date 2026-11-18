@@ -8,7 +8,7 @@ import { NAV } from '@/lib/site';
 export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-black/5 bg-white/80 backdrop-blur-lg">
-      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-none items-center justify-between gap-4 px-4 sm:px-8 lg:px-12">
         <div className="flex h-full items-center gap-4">
           <Link href="/" aria-label="Elixir Points rewards programme, home" className="shrink-0">
             <span className="flex items-center gap-2.5">
