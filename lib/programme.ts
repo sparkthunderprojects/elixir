@@ -28,7 +28,12 @@ const FALLBACK: Programme = {
     { title: '£10 off your order', description: 'Redeem at checkout on any Sparkthunder brand', reward_type: 'fixed_discount', value: 10, point_cost: 2000, brand: null },
     { title: '£25 off your order', description: 'Redeem at checkout on any Sparkthunder brand', reward_type: 'fixed_discount', value: 25, point_cost: 5000, brand: null },
   ],
-  brands: [{ slug: 'sparkthunder-shop', name: 'Sparkthunder Shop', brand_type: 'owned' }],
+  brands: [
+    { slug: 'sparkthunder-shop', name: 'Sparkthunder Shop', brand_type: 'owned' },
+    { slug: 'knightverge', name: 'Knightverge', brand_type: 'owned' },
+    { slug: 'roll-combat', name: 'Roll Combat', brand_type: 'owned' },
+    { slug: 'miss-petty', name: 'Miss Petty', brand_type: 'owned' },
+  ],
 };
 
 /**

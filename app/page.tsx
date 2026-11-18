@@ -2,6 +2,8 @@ import Link from 'next/link';
 import JsonLd from '@/components/json-ld';
 import { Droplet, PhoneMock, PointChips, TierSteps, Tickets } from '@/components/art';
 import { ButtonLink, SectionTitle, SplitCard } from '@/components/ui';
+import BrandTile from '@/components/brand-tile';
+import { sortBrands } from '@/lib/brands';
 import { getProgramme, gbp, num, pointsValue } from '@/lib/programme';
 import { SITE_DESCRIPTION, SITE_URL } from '@/lib/site';
 
@@ -49,11 +51,11 @@ export default async function HomePage() {
           <h2 id="brands" className="text-3xl font-extrabold !text-white sm:text-4xl">Brands that earn Elixir Points</h2>
           <Link href="/brands" className="text-sm font-bold text-white underline underline-offset-4">See all brands</Link>
         </div>
-        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {p.brands.slice(0, 7).map((b) => (
-            <li key={b.slug} className="flex h-28 items-center justify-center rounded-2xl bg-white/95 p-3 text-center text-sm font-extrabold text-deep">{b.name}</li>
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {sortBrands(p.brands).slice(0, 9).map((b) => (
+            <li key={b.slug}><BrandTile slug={b.slug} name={b.name} className="h-36" /></li>
           ))}
-          <li className="flex h-28 items-center justify-center rounded-2xl border-2 border-dashed border-white/60 p-3 text-center text-sm font-bold text-white">More brands joining soon</li>
+          <li className="flex h-36 items-center justify-center rounded-2xl border-2 border-dashed border-white/60 p-3 text-center text-sm font-bold text-white">More brands joining soon</li>
         </ul>
       </section>
 
