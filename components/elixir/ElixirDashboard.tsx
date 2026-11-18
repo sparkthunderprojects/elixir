@@ -2,21 +2,24 @@
 
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
-import { Award, Coins, Crown, Gift, History, KeyRound, LogOut, Settings, TrendingUp, PenSquare, Users, CheckCircle2, Wallet } from "lucide-react";
+import { Inbox, Award, Coins, Crown, Gift, History, KeyRound, LogOut, Settings, TrendingUp, PenSquare, Users, CheckCircle2, Wallet } from "lucide-react";
 import { api, useAsync } from "@/lib/elixir";
 import { useAuth } from "./session";
 import { formatCurrency, formatNumber } from "@/lib/elixir-format";
 import { ErrorNote, KpiCard, Loading } from "./ui";
 import { AdjustmentsView, MembersView } from "./MembersView";
 import { RewardsView } from "./RewardsView";
+import { EnquiriesView } from "./EnquiriesView";
 import { BrandsView, SettingsView } from "./AdminViews";
 
-type View = "overview" | "members" | "rewards" | "adjustments" | "brands" | "settings";
+type View = "overview" | "members" | "rewards" | "adjustments" | "enquiries" | "brands" | "settings";
 
 export function ElixirDashboard() {
   const { staff } = useAuth();
   const isAdmin = staff?.role === "admin";
   const [view, setView] = useState<View>("overview");
+  const enq = useAsync(() => api.enquiries("new"), []);
+  const newCount = enq.data?.new_count ?? 0;
 
   return (
     <div className="space-y-5">
@@ -30,6 +33,7 @@ export function ElixirDashboard() {
         <Tab id="members" view={view} set={setView} icon={<Users className="h-4 w-4" />} label="Members" />
         <Tab id="rewards" view={view} set={setView} icon={<Gift className="h-4 w-4" />} label="Rewards" />
         <Tab id="adjustments" view={view} set={setView} icon={<History className="h-4 w-4" />} label="Adjustments" />
+        <Tab id="enquiries" view={view} set={setView} icon={<Inbox className="h-4 w-4" />} label={newCount ? `Enquiries (${newCount})` : "Enquiries"} />
         {isAdmin && <Tab id="brands" view={view} set={setView} icon={<KeyRound className="h-4 w-4" />} label="Brands & Keys" />}
         <Link href="/admin/content" className="flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-slate-600 transition-all hover:bg-slate-50"><PenSquare className="h-4 w-4" />Website content</Link>
         {isAdmin && <Tab id="settings" view={view} set={setView} icon={<Settings className="h-4 w-4" />} label="Settings" />}
@@ -39,6 +43,7 @@ export function ElixirDashboard() {
       {view === "members" && <MembersView />}
       {view === "rewards" && <RewardsView isAdmin={isAdmin} />}
       {view === "adjustments" && <AdjustmentsView />}
+      {view === "enquiries" && <EnquiriesView onChange={enq.reload} />}
       {view === "brands" && isAdmin && <BrandsView />}
       {view === "settings" && isAdmin && <SettingsView />}
     </div>

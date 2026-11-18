@@ -142,6 +142,12 @@ async function rpc<T>(fn: string, args?: Record<string, unknown>): Promise<T> {
   return data as T;
 }
 
+export interface EnquiryRow {
+  id: string; created_at: string; company: string; contact_name: string; email: string; website: string | null;
+  interests: string[]; message: string | null; status: "new" | "contacted" | "closed"; notes: string | null;
+}
+export interface EnquiryList { new_count: number; total: number; rows: EnquiryRow[] }
+
 export const api = {
   whoami: () => rpc<Staff | null>("elixir_whoami"),
   overview: () => rpc<Overview>("elixir_admin_overview"),
@@ -162,6 +168,10 @@ export const api = {
     rpc<{ id: string }>("elixir_admin_save_brand", { p: b }),
   createKey: (brandId: string, label: string) => rpc<{ id: string; key: string }>("elixir_admin_create_key", { p_brand: brandId, p_label: label }),
   revokeKey: (keyId: string) => rpc<void>("elixir_admin_revoke_key", { p_key: keyId }),
+  enquiries: (status: string | null) => rpc<EnquiryList>("elixir_admin_enquiries", { p_status: status, p_limit: 100, p_offset: 0 }),
+  updateEnquiry: (id: string, status: string, notes: string | null) => rpc<void>("elixir_admin_update_enquiry", { p_id: id, p_status: status, p_notes: notes }),
+  submitEnquiry: (p: { company: string; contact_name: string; email: string; website: string; interests: string[]; message: string }) =>
+    rpc<{ ok: boolean }>("elixir_submit_enquiry", { p }),
   config: () => rpc<Config>("elixir_admin_config"),
   saveConfig: (c: Config) => rpc<void>("elixir_admin_save_config", { p: c }),
 };

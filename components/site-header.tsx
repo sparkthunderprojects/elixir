@@ -24,6 +24,7 @@ export default function SiteHeader({ c }: { c: Content }) {
           <NavLinks items={nav} />
         </div>
         <div className="flex items-center gap-2">
+          <Link href={c.t('header.business_href') || '/business'} className="hidden rounded-lg px-3 py-2 text-sm font-bold text-elixir hover:bg-elixir/10 lg:inline-block">{c.t('header.business')}</Link>
           <HeaderAuth labels={{ signin: c.t('header.signin'), join: c.t('header.join'), signout: c.t('header.signout') }} />
           <details className="relative md:hidden">
             <summary aria-label="Menu" className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-black/10 text-deep">
@@ -31,6 +32,7 @@ export default function SiteHeader({ c }: { c: Content }) {
             </summary>
             <nav aria-label="Mobile" className="absolute right-0 top-12 w-56 rounded-2xl bg-white p-2 shadow-xl ring-1 ring-black/5">
               {nav.map((n) => <Link key={n.href} href={n.href} className="block rounded-xl px-4 py-3 text-sm font-semibold text-deep hover:bg-page">{n.label}</Link>)}
+              <Link href={c.t('header.business_href') || '/business'} className="block rounded-xl px-4 py-3 text-sm font-bold text-elixir hover:bg-page">{c.t('header.business')}</Link>
             </nav>
           </details>
         </div>

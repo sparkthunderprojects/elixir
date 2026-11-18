@@ -73,6 +73,8 @@ export const PAGES: PageDef[] = [
           text('strapline', 'Strapline under the name', 'Rewards programme'),
           text('signin', 'Sign in button', 'Sign in'),
           text('join', 'Join button', 'Join free'),
+          text('business', 'For-business link', 'Elixir 360', 'A small link in the header (and footer) that leads to the business and partners section.'),
+          link('business_href', 'For-business link address', '/business'),
           text('signout', 'Sign out button', 'Sign out'),
         ],
       },
@@ -291,6 +293,182 @@ export const PAGES: PageDef[] = [
           text('owned', 'Description for our brands without one', 'Sparkthunder brand'),
           text('footnote', 'Note under the cards', 'More brands are joining over time, so your points will go even further.'),
           text('button', 'Button', 'Join free'),
+        ],
+      },
+    ],
+  },
+  // -------------------------------------------------------------------------
+  {
+    slug: 'business', title: 'Elixir 360 (business)', path: '/business', description: 'The business and partners front page.',
+    groups: [
+      seo('Elixir 360: loyalty, insights and media for brands', 'Partner with Elixir Points. Give customers one rewards balance across brands, and learn what keeps them coming back. Elixir 360 is for brands and partners.'),
+      {
+        id: 'hero', label: 'Top banner',
+        fields: [
+          text('eyebrow', 'Small heading', 'Elixir 360 · for brands and partners'),
+          text('title', 'Heading', 'Reach customers who love to come back'),
+          area('text', 'Intro text', 'Elixir 360 is the business side of Elixir Points. Join our rewards coalition to give your customers one points balance they can earn and spend across brands, and learn what keeps them coming back.'),
+          text('primary', 'Main button', 'Become a partner'),
+          text('secondary', 'Second button', 'See what we offer'),
+          text('dash_title', 'Dashboard picture: title', 'Partner view'),
+          text('dash_note', 'Dashboard picture: note', 'Illustrative example, not real data'),
+        ],
+      },
+      {
+        id: 'offer', label: 'What we offer',
+        fields: [
+          text('title', 'Section heading', 'Three ways to grow with Elixir'),
+          list('items', 'Cards', 'card', 'title', [
+            link('href', 'Page address', ''), text('status', 'Label', ''), text('title', 'Title', ''), area('text', 'Text', ''),
+          ], [
+            { href: '/business/loyalty', status: 'Available now', title: 'Loyalty', text: 'Let customers earn and spend Elixir Points with your brand, in their own currency, with refunds handled automatically.' },
+            { href: '/business/insights', status: 'Coming soon', title: 'Insights', text: 'Understand repeat purchases and loyalty across the coalition, with customer permission, through a partner dashboard.' },
+            { href: '/business/media', status: 'Coming soon', title: 'Media', text: 'Put your brand in front of Elixir members with featured placements and offers across our sites and emails.' },
+          ]),
+          text('more', 'Link under each card', 'Find out more'),
+        ],
+      },
+      {
+        id: 'why', label: 'Why Elixir',
+        fields: [
+          text('title', 'Section heading', 'Why partner with Elixir'),
+          list('items', 'Reasons', 'reason', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
+            { title: 'One currency, many brands', text: 'Points earned with one brand can be spent with another, so every partner benefits from customers who are already collecting.' },
+            { title: 'Built for a global audience', text: 'Customers earn in their own currency, with local earn rates and values, so Elixir works wherever you sell.' },
+            { title: 'Simple to connect', text: 'Your website sends us each order and refund through a secure server-to-server connection. No customer payment details ever reach us.' },
+            { title: 'Privacy first', text: 'Customer data is only used with their permission, and every point is recorded in a tamper-proof ledger you can audit.' },
+          ]),
+        ],
+      },
+      {
+        id: 'steps', label: 'How partnering works',
+        fields: [
+          text('title', 'Section heading', 'How partnering works'),
+          list('items', 'Steps', 'step', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
+            { title: 'Talk to us', text: 'Tell us about your brand and what you would like to achieve. We will come back to you to find the right fit.' },
+            { title: 'Connect', text: 'We set you up with your own secure key and help your developers send orders and refunds to Elixir.' },
+            { title: 'Launch and grow', text: 'Your customers start earning straight away. We track every point issued and redeemed for your brand, so you always know where you stand.' },
+          ]),
+        ],
+      },
+      { id: 'family', label: 'Brands strip', fields: [text('title', 'Heading', 'Already in the family'), text('text', 'Text', 'These brands already earn Elixir Points.')] },
+      { id: 'cta', label: 'Closing call to action', fields: [text('title', 'Heading', 'Ready to talk?'), text('text', 'Text', 'Tell us about your brand and we will be in touch.'), text('button', 'Button', 'Become a partner')] },
+    ],
+  },
+  // -------------------------------------------------------------------------
+  ...[
+    {
+      slug: 'business-loyalty', title: 'Elixir 360: Loyalty', path: '/business/loyalty', name: 'Loyalty', status: 'Available now', interest: 'loyalty',
+      pageTitle: 'Loyalty for brands | Elixir 360', pageDesc: 'Let customers earn and spend Elixir Points with your brand, in their own currency. Refunds, guests and rewards handled for you.',
+      text: 'Give customers a reason to come back, with points they can spend across the whole Elixir family.',
+      benefitsTitle: 'What you get',
+      benefits: [
+        { title: 'Points on every order', text: 'Customers earn Elixir Points when they buy from you, at a rate we agree together.' },
+        { title: 'Refunds handled for you', text: 'If an order is refunded, the points earned on it are taken back automatically.' },
+        { title: 'Guests included', text: 'Points earned with just an email address are held until the customer joins, so no purchase is wasted.' },
+        { title: 'Any currency', text: 'Earn rates and values are set per currency, so customers see something that makes sense where they live.' },
+        { title: 'Rewards that bring them back', text: 'Members spend points on rewards. Every redemption is a single-use code, tracked from issue to use.' },
+      ],
+      stepsTitle: 'How it works',
+      steps: [
+        { title: 'Connect', text: 'Your website sends us each order through a secure key we give you.' },
+        { title: 'Earn', text: 'The customer earns points on what they paid, in their own currency, and sees them in their Elixir account.' },
+        { title: 'Redeem', text: 'They spend points on rewards across the family, including with you.' },
+      ],
+      note: 'Loyalty is live across the Sparkthunder family. We are opening it up to outside partners gradually, so get in touch to talk about your brand.',
+    },
+    {
+      slug: 'business-insights', title: 'Elixir 360: Insights', path: '/business/insights', name: 'Insights', status: 'Coming soon', interest: 'insights',
+      pageTitle: 'Customer insights for brands | Elixir 360', pageDesc: 'Understand repeat purchases and loyalty across the Elixir coalition, with customer permission. Insights for Elixir 360 partners, coming soon.',
+      text: 'See what keeps customers coming back, using shopping patterns shared with their permission.',
+      benefitsTitle: 'What you will be able to see',
+      benefits: [
+        { title: 'What keeps customers coming back', text: 'Repeat purchase patterns for your brand and across the coalition.' },
+        { title: 'Who your customers are', text: 'Audience groups built from shopping behaviour, shown as groups rather than individuals.' },
+        { title: 'How your offers perform', text: 'Compare the sales around a bonus-points offer with a normal week.' },
+        { title: 'Privacy by design', text: 'Insights use only data customers have agreed to share.' },
+      ],
+      stepsTitle: 'How it will work',
+      steps: [
+        { title: 'Members opt in', text: 'Customers choose whether their shopping can be used for insights.' },
+        { title: 'We bring it together', text: 'Orders from across the coalition are combined into one picture.' },
+        { title: 'You act on it', text: 'Use what you learn to plan offers, launches and campaigns.' },
+      ],
+      note: 'Insights are in development. Early partners will help shape them, so tell us what you would want to see.',
+    },
+    {
+      slug: 'business-media', title: 'Elixir 360: Media', path: '/business/media', name: 'Media', status: 'Coming soon', interest: 'media',
+      pageTitle: 'Reach Elixir members | Elixir 360 media', pageDesc: 'Put your brand in front of Elixir members with featured placements and offers across our sites and emails. Elixir 360 media is coming soon.',
+      text: 'Put your brand in front of people who already collect Elixir Points.',
+      benefitsTitle: 'What you will be able to do',
+      benefits: [
+        { title: 'Featured placements', text: 'Show your brand or a new launch on Elixir and partner sites.' },
+        { title: 'Targeted offers', text: 'Send members an offer that matches what they like, such as bonus points on a product.' },
+        { title: 'Bonus-points campaigns', text: 'Run double-points weeks that bring customers in at the right moment.' },
+        { title: 'Results you can measure', text: 'See what a campaign delivered, from views to sales.' },
+      ],
+      stepsTitle: 'How it will work',
+      steps: [
+        { title: 'Pick your goal', text: 'Launch something, win back customers or clear stock.' },
+        { title: 'Choose your audience', text: 'Reach members who fit, using only information they have agreed to share.' },
+        { title: 'Launch and learn', text: 'Go live, then see what worked.' },
+      ],
+      note: 'Media is in development. Tell us what you would like to promote and we will let you know as it opens.',
+    },
+  ].map((d): PageDef => ({
+    slug: d.slug, title: d.title, path: d.path, description: `The ${d.name} page for business partners.`,
+    groups: [
+      seo(d.pageTitle, d.pageDesc),
+      intro(d.name, d.text),
+      { id: 'status', label: 'Status label', fields: [text('label', 'Label shown at the top', d.status, 'For example Available now or Coming soon.')] },
+      {
+        id: 'benefits', label: 'What partners get',
+        fields: [
+          text('title', 'Section heading', d.benefitsTitle),
+          list('items', 'Benefits', 'benefit', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], d.benefits),
+        ],
+      },
+      {
+        id: 'steps', label: 'How it works',
+        fields: [
+          text('title', 'Section heading', d.stepsTitle),
+          list('items', 'Steps', 'step', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], d.steps),
+        ],
+      },
+      { id: 'note', label: 'Good to know', fields: [area('text', 'Note', d.note)] },
+      { id: 'cta', label: 'Call to action', fields: [text('title', 'Heading', 'Interested in ' + d.name + '?'), text('button', 'Button', 'Talk to us'), text('back', 'Link back to the overview', 'Back to Elixir 360')] },
+    ],
+  })),
+  // -------------------------------------------------------------------------
+  {
+    slug: 'business-contact', title: 'Elixir 360: Become a partner', path: '/business/contact', description: 'The enquiry form for businesses and partners.',
+    groups: [
+      seo('Become an Elixir 360 partner', 'Tell us about your brand and what you would like to achieve with Elixir 360. We read every message and reply by email.'),
+      intro('Become a partner', 'Tell us about your brand and what you would like to achieve with Elixir 360. We read every message and reply by email.'),
+      {
+        id: 'form', label: 'The form',
+        fields: [
+          text('company', 'Company label', 'Company'),
+          text('name', 'Name label', 'Your name'),
+          text('email', 'Email label', 'Work email'),
+          text('website', 'Website label', 'Website (optional)'),
+          text('interests', 'Interests heading', 'What are you interested in?'),
+          text('interest_loyalty', 'Option: Loyalty', 'Loyalty'),
+          text('interest_insights', 'Option: Insights', 'Insights'),
+          text('interest_media', 'Option: Media', 'Media'),
+          text('interest_other', 'Option: other', 'Something else'),
+          text('message', 'Message label', 'How can we help?'),
+          text('submit', 'Send button', 'Send enquiry'),
+          text('consent', 'Small print', 'We will only use your details to reply to your enquiry.'),
+        ],
+      },
+      {
+        id: 'done', label: 'After sending',
+        fields: [
+          text('title', 'Thank-you heading', 'Thank you'),
+          text('text', 'Thank-you text', 'We have your message and will be in touch by email soon.'),
+          text('limit', 'Too many enquiries message', 'You have already sent a few enquiries today. Please wait for our reply, or try again tomorrow.'),
+          text('error', 'Something went wrong message', 'Something went wrong sending your enquiry. Please try again in a moment.'),
         ],
       },
     ],
