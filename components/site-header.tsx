@@ -9,12 +9,12 @@ export default function SiteHeader({ c }: { c: Content }) {
   const nav = c.list<{ href: string; label: string }>('nav.items');
   const mark = c.img('header.mark');
   return (
-    <header className="sticky top-0 z-40 border-b border-black/5 bg-white/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 border-b border-white/60 bg-white/75 shadow-[0_10px_30px_-18px_rgba(15,26,48,0.45)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-none items-center justify-between gap-4 px-4 sm:px-8 lg:px-12">
         <div className="flex h-full items-center gap-4">
           <Link href="/" aria-label={`${c.t('header.name_main')} ${c.t('header.name_light')} ${c.t('header.strapline')}, home`} className="shrink-0">
             <span className="flex items-center gap-2.5">
-              <Image src={mark.src} alt={mark.alt} width={mark.width || 147} height={mark.height || 200} priority className="h-10 w-auto" />
+              <Image src={mark.src} alt={mark.alt} width={mark.width || 147} height={mark.height || 200} priority className="h-11 w-auto drop-shadow-[0_4px_6px_rgba(189,49,65,0.35)]" />
               <span className="leading-none">
                 <span className="block text-lg font-extrabold uppercase tracking-tight text-navy">{c.t('header.name_main')} <span className="font-medium">{c.t('header.name_light')}</span></span>
                 <span className="mt-1 block text-[9px] font-semibold uppercase tracking-[0.25em] text-body">{c.t('header.strapline')}</span>

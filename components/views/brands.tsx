@@ -18,7 +18,7 @@ export default function BrandsView({ p, c, site }: ViewProps) {
         {brands.map((b) => {
           const look = looks[b.slug];
           return (
-            <li key={b.slug} className="flex flex-col rounded-3xl bg-white p-4">
+            <li key={b.slug} className="flex flex-col card-depth rounded-3xl p-4">
               <BrandTile look={look} name={b.name} className="h-44" />
               <div className="flex flex-1 flex-col p-3 pt-5">
                 <h2 className="text-xl font-extrabold text-deep">{b.name}</h2>

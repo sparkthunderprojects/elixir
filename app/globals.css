@@ -13,3 +13,41 @@ details > summary::-webkit-details-marker { display: none; }
   .float-slower { animation: float 9s ease-in-out infinite reverse; }
 }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* ---- Depth: layered backgrounds, soft shadows and glass, so panels sit on the page instead of lying flat on it ---- */
+body {
+  background:
+    radial-gradient(900px 500px at 8% -5%, rgba(255, 135, 111, 0.16), transparent 60%),
+    radial-gradient(800px 500px at 100% 20%, rgba(29, 53, 87, 0.10), transparent 60%),
+    radial-gradient(700px 500px at 0% 70%, rgba(255, 210, 46, 0.10), transparent 60%),
+    #f4f0ec;
+  background-attachment: fixed;
+}
+.card-depth {
+  background: linear-gradient(180deg, #ffffff 0%, #fbf8f5 100%);
+  box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(15, 26, 48, 0.05), 0 14px 34px -16px rgba(15, 26, 48, 0.28), 0 2px 6px -2px rgba(15, 26, 48, 0.08);
+}
+.lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(15, 26, 48, 0.06), 0 24px 44px -16px rgba(15, 26, 48, 0.35); }
+/* Dark hero: warm glow top-right, soft coral bottom-left, a faint grid, on deep navy */
+.hero-deep {
+  background:
+    radial-gradient(55% 75% at 85% 15%, rgba(224, 82, 95, 0.55), transparent 62%),
+    radial-gradient(45% 60% at 8% 100%, rgba(255, 135, 111, 0.28), transparent 62%),
+    radial-gradient(40% 50% at 50% 0%, rgba(29, 53, 87, 0.9), transparent 70%),
+    linear-gradient(160deg, #0f1a30 0%, #14233f 60%, #1d3557 100%);
+  box-shadow: 0 30px 60px -30px rgba(15, 26, 48, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.hero-deep::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(70% 80% at 70% 40%, #000, transparent 75%);
+}
+.glass { background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)); backdrop-filter: blur(12px); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 20px 40px -20px rgba(0, 0, 0, 0.5); }
+.glow-ring { position: absolute; border-radius: 9999px; pointer-events: none; filter: blur(60px); }
+.drop-glow { filter: drop-shadow(0 12px 18px rgba(189, 49, 65, 0.45)); }
+@media (prefers-reduced-motion: no-preference) {
+  .pulse-glow { animation: pulse-glow 6s ease-in-out infinite; }
+}
+@keyframes pulse-glow { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.08); } }

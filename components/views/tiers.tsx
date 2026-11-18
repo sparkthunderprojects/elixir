@@ -15,7 +15,7 @@ export default function TiersView({ p, c }: ViewProps) {
       }} />
       <div className="grid gap-5 sm:grid-cols-2">
         {p.tiers.map((t) => (
-          <section key={t.id} id={t.id} className="rounded-3xl bg-white p-6 sm:p-8">
+          <section key={t.id} id={t.id} className="card-depth lift rounded-3xl p-6 sm:p-8">
             <h2 className="text-xl font-bold" style={{ color: t.color }}>{t.name}</h2>
             <p className="mt-1 text-sm text-body">{t.min_spend_gbp === 0 ? c.t('cards.start') : c.t('cards.spend', { amount: gbp(t.min_spend_gbp) })}</p>
             <p className="mt-4 text-2xl font-extrabold text-deep">{t.earn_multiplier}x <span className="text-base font-medium text-body">{c.t('cards.suffix')}</span></p>
@@ -27,7 +27,7 @@ export default function TiersView({ p, c }: ViewProps) {
           </section>
         ))}
       </div>
-      <p className="mt-10"><Link href="/signup" className="inline-flex rounded-xl bg-elixir px-6 py-3.5 text-sm font-bold text-white hover:bg-elixir-dark">{c.t('cards.button')}</Link></p>
+      <p className="mt-10"><Link href="/signup" className="inline-flex rounded-xl bg-gradient-to-b from-[#e85a68] to-[#b02a3c] px-6 py-3.5 text-sm font-bold text-white shadow-[0_10px_22px_-8px_rgba(189,49,65,0.8),inset_0_1px_0_rgba(255,255,255,0.4)] transition hover:-translate-y-0.5">{c.t('cards.button')}</Link></p>
     </PageShell>
   );
 }

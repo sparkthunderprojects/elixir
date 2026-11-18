@@ -11,7 +11,7 @@ export default function RewardsView({ p, c }: ViewProps) {
       ) : (
         <ul className="grid gap-5 sm:grid-cols-2">
           {p.rewards.map((r) => (
-            <li key={r.title} className="rounded-3xl bg-white p-6 sm:p-8">
+            <li key={r.title} className="card-depth lift rounded-3xl p-6 sm:p-8">
               <h2 className="text-lg font-bold text-deep">{r.title}</h2>
               <p className="mt-1 text-sm text-body">{r.description}</p>
               <p className="mt-4 font-bold text-elixir">{num(r.point_cost)} points <span className="text-sm font-normal text-body">({c.t('list.worth', { amount: gbp(pointsValue(r.point_cost, p)) })})</span></p>

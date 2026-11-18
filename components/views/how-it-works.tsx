@@ -8,7 +8,7 @@ export default function HowItWorksView({ c }: ViewProps) {
     <PageShell title={c.t('intro.title')} intro={c.t('intro.text')} path="/how-it-works">
       <div className="grid gap-5 sm:grid-cols-2">
         {steps.map((s, i) => (
-          <section key={`${i}-${s.h}`} className="rounded-3xl bg-white p-6 sm:p-8">
+          <section key={`${i}-${s.h}`} className="card-depth rounded-3xl p-6 sm:p-8">
             <h2 className="text-xl font-bold text-deep">{s.h}</h2>
             <p className="mt-2 max-w-3xl text-body">{s.t}</p>
           </section>
