@@ -67,7 +67,7 @@ export default function EnquiryForm({ labels }: { labels: Record<string, string>
           ))}
         </div>
       </fieldset>
-      <label className={lab}>{labels.message}<textarea name="message" rows={5} maxLength={2000} className={input} /></label>
+      <label className={lab}>{labels.message}<textarea name="message" required rows={5} maxLength={2000} className={input} /></label>
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>Leave empty<input name="hp" tabIndex={-1} autoComplete="off" /></label>
       </div>
