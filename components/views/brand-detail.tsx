@@ -13,7 +13,8 @@ import type { Content } from '@/lib/cms/resolve';
 export default function BrandDetailView({ slug, p, c, site }: { slug: string; p: Programme; c: Content; site: Content }) {
   const brand = p.brands.find((b) => b.slug === slug)!;
   const look = brandLooks(site)[slug];
-  const v = { brand: brand.name };
+  const rate = brand.earn_points_per_gbp ?? p.earn_points_per_gbp;
+  const v = { brand: brand.name, brand_earn: `${num(rate)} Elixir Point${rate === 1 ? '' : 's'}` };
   const mine = p.rewards.filter((r) => r.brand === brand.name);
   const shared = p.rewards.filter((r) => !r.brand);
   const rewards = [...mine, ...shared].slice(0, 6);

@@ -2,7 +2,7 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@/lib/config';
 
 export interface Tier { id: string; name: string; min_spend_gbp: number; earn_multiplier: number; color: string; perks: string[] }
 export interface PublicReward { title: string; description: string; reward_type: string; value: number | null; point_cost: number; brand: string | null }
-export interface PublicBrand { slug: string; name: string; brand_type: 'owned' | 'partner' }
+export interface PublicBrand { slug: string; name: string; brand_type: 'owned' | 'partner'; /** The brand's own earn rate per £1, or null/absent for the standard rate. */ earn_points_per_gbp?: number | null }
 export interface Programme {
   earn_points_per_gbp: number;
   redeem_points_per_gbp: number;
