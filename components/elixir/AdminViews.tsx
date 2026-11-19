@@ -78,6 +78,7 @@ export function BrandsView() {
                   ))}
                 </ul>
               </div>
+              <BrandUsersPanel brandId={b.id} />
             </div>
           ))}
         </div>
@@ -122,7 +123,7 @@ function BrandModal({ onClose, onSaved }: { onClose: () => void; onSaved: () => 
   );
 }
 
-function KeyModal({ brand, apiKey, onClose }: { brand: string; apiKey: string; onClose: () => void }) {
+export function KeyModal({ brand, apiKey, onClose }: { brand: string; apiKey: string; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
   return (
     <Modal title={`New key for ${brand}`} onClose={onClose}>
@@ -221,6 +222,40 @@ function TierForm({ tier, onSaved }: { tier: TierRow; onSaved: () => void }) {
       <div><label className="label">Perks (one per line)</label><textarea rows={3} value={t.perksText} onChange={(e) => setT({ ...t, perksText: e.target.value })} className="input resize-none" /></div>
       <ErrorNote message={error} />
       <div className="flex justify-end"><button onClick={save} disabled={busy} className="btn-secondary">{busy ? <Spinner className="h-4 w-4" /> : <Save className="h-4 w-4" />}Save {t.name}</button></div>
+    </div>
+  );
+}
+
+function BrandUsersPanel({ brandId }: { brandId: string }) {
+  const users = useAsync(() => api.brandUsers(brandId), [brandId]);
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("owner");
+  const [error, setError] = useState<string | null>(null);
+  const run = async (fn: () => Promise<unknown>) => {
+    setError(null);
+    try { await fn(); users.reload(); } catch (e) { setError(errMsg(e)); }
+  };
+  return (
+    <div className="border-t border-slate-100 p-4 dark:border-slate-700">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Partner portal access</p>
+      <ErrorNote message={error ?? users.error} />
+      {(users.data ?? []).length === 0 && !users.loading && <p className="text-sm text-slate-400">Nobody linked yet</p>}
+      <ul className="space-y-1.5">
+        {(users.data ?? []).map((u) => (
+          <li key={u.user_id} className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm dark:bg-slate-700/40">
+            <span>{u.email} <span className="ml-2 text-xs text-slate-400">{u.role}</span></span>
+            <button onClick={() => void run(() => api.removeBrandUser(brandId, u.user_id))} className="text-xs font-medium text-danger-600 hover:underline">Remove</button>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="partner@company.com (must have an account)" className="min-w-0 flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-600 dark:bg-slate-900" />
+        <select value={role} onChange={(e) => setRole(e.target.value)} className="rounded-lg border border-slate-200 px-2 py-1.5 text-sm dark:border-slate-600 dark:bg-slate-900">
+          <option value="owner">Owner (can manage keys)</option>
+          <option value="staff">Staff (view only)</option>
+        </select>
+        <button onClick={() => void run(async () => { await api.addBrandUser(brandId, email, role); setEmail(""); })} disabled={!email.trim()} className="btn-secondary py-1 text-xs"><Plus className="h-3.5 w-3.5" />Link</button>
+      </div>
     </div>
   );
 }

@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   if (!configured) return response;
   const path = request.nextUrl.pathname;
   const isAdmin = path === '/admin' || path.startsWith('/admin/');
-  const isAccount = path === '/account' || path.startsWith('/account/');
+  const isAccount = path === '/account' || path.startsWith('/account/') || path === '/partner' || path.startsWith('/partner/');
   if ((isAdmin || isAccount) && !user) return redirectWithCookies(request, response, `/login?next=${encodeURIComponent(path)}`);
   if (!isAdmin && !isAccount && user && (path === '/login' || path === '/signup')) {
     return redirectWithCookies(request, response, '/');
@@ -15,4 +15,4 @@ export async function middleware(request: NextRequest) {
 }
 
 // Public pages are not matched, so they stay fast and static.
-export const config = { matcher: ['/admin', '/admin/:path*', '/account', '/account/:path*', '/login', '/signup'] };
+export const config = { matcher: ['/admin', '/admin/:path*', '/account', '/account/:path*', '/partner', '/partner/:path*', '/login', '/signup'] };

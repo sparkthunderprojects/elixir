@@ -10,6 +10,7 @@ import { getElixirClient } from '@/lib/elixir-client';
 export default function HeaderAuth({ labels }: { labels: { signin: string; join: string; signout: string } }) {
   const router = useRouter();
   const [email, setEmail] = useState<string | null | undefined>(undefined);
+  const [partner, setPartner] = useState(false);
 
   useEffect(() => {
     const supabase = getElixirClient();
@@ -24,13 +25,14 @@ export default function HeaderAuth({ labels }: { labels: { signin: string; join:
       }
       supabase.rpc('elixir_join').then(() => undefined, () => undefined);
     };
+    const checkPartner = () => supabase.rpc('elixir_partner_brands').then(({ data }) => setPartner(Array.isArray(data) && data.length > 0), () => undefined);
     supabase.auth.getUser().then(({ data }) => {
       setEmail(data.user?.email ?? null);
-      if (data.user) join();
+      if (data.user) { join(); void checkPartner(); }
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
       setEmail(session?.user?.email ?? null);
-      if (session?.user) join();
+      if (session?.user) { join(); void checkPartner(); } else setPartner(false);
     });
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -45,6 +47,7 @@ export default function HeaderAuth({ labels }: { labels: { signin: string; join:
   if (email) {
     return (
       <>
+      {partner && <Link href="/partner" className="hidden rounded-xl border-2 border-elixir px-4 py-2 text-sm font-bold text-elixir hover:bg-elixir/5 sm:inline-block">Partner</Link>}
       <Link href="/account" className="rounded-xl bg-elixir px-4 py-2 text-sm font-bold text-white hover:bg-elixir-dark">My Elixir</Link>
       <button onClick={signOut} className="inline-flex items-center gap-2 rounded-xl border-2 border-elixir px-4 py-2 text-sm font-bold text-elixir hover:bg-elixir/5">
         <LogOut className="h-4 w-4" /> {labels.signout}

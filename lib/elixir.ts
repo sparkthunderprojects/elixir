@@ -158,7 +158,26 @@ export interface Liability {
 export interface ExpiryPolicy { months: number | null; due_members: number; due_points: number }
 export interface ExpiryRun { dry_run: boolean; members: number; points: number; more_to_do: boolean }
 
+export interface PartnerBrand { brand_id: string; name: string; slug: string; role: 'owner' | 'staff'; active: boolean }
+export interface PartnerOverview {
+  brand: { id: string; name: string; slug: string; active: boolean };
+  days: number; points_issued: number; points_funded: number; points_redeemed: number; funding_cost_gbp: number;
+  spend_gbp: number; orders: number; members: number;
+  daily: { day: string; points: number; spend_gbp: number; orders: number }[];
+  recent: { created_at: string; kind: string; delta: number; spend_gbp: number | null; source_ref: string | null; description: string | null; member: string }[];
+}
+export interface PartnerKey { id: string; label: string; prefix: string; created_at: string; revoked_at: string | null }
+export interface BrandUser { user_id: string; email: string; role: 'owner' | 'staff'; created_at: string }
+
 export const api = {
+  partnerBrands: () => rpc<PartnerBrand[]>("elixir_partner_brands"),
+  partnerOverview: (brand: string, days: number) => rpc<PartnerOverview>("elixir_partner_overview", { p_brand: brand, p_days: days }),
+  partnerKeys: (brand: string) => rpc<PartnerKey[]>("elixir_partner_keys", { p_brand: brand }),
+  partnerCreateKey: (brand: string, label: string) => rpc<{ id: string; key: string }>("elixir_partner_create_key", { p_brand: brand, p_label: label }),
+  partnerRevokeKey: (brand: string, key: string) => rpc<void>("elixir_partner_revoke_key", { p_brand: brand, p_key: key }),
+  brandUsers: (brand: string) => rpc<BrandUser[]>("elixir_admin_brand_users", { p_brand: brand }),
+  addBrandUser: (brand: string, email: string, role: string) => rpc<void>("elixir_admin_add_brand_user", { p_brand: brand, p_email: email, p_role: role }),
+  removeBrandUser: (brand: string, user: string) => rpc<void>("elixir_admin_remove_brand_user", { p_brand: brand, p_user: user }),
   whoami: () => rpc<Staff | null>("elixir_whoami"),
   overview: () => rpc<Overview>("elixir_admin_overview"),
   members: (search: string, limit: number) =>
