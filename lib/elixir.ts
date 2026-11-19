@@ -169,7 +169,17 @@ export interface PartnerOverview {
 export interface PartnerKey { id: string; label: string; prefix: string; created_at: string; revoked_at: string | null }
 export interface BrandUser { user_id: string; email: string; role: 'owner' | 'staff'; created_at: string }
 
+export interface SettlementRow { id: string; brand: string; period_start: string; period_end: string; points_funded: number; amount_gbp: number; status: 'draft' | 'issued' | 'paid'; issued_at: string | null; paid_at: string | null }
+export interface TrialLine { code: string; name: string; kind: string; debit: number; credit: number }
+export interface PartnerSettlement { period_start: string; period_end: string; points_funded: number; amount_gbp: number; status: 'issued' | 'paid'; issued_at: string | null; paid_at: string | null }
+
 export const api = {
+  settlements: () => rpc<SettlementRow[]>("elixir_admin_settlements"),
+  generateSettlements: (from: string, to: string) => rpc<{ created: number }>("elixir_admin_generate_settlements", { p_from: from, p_to: to }),
+  issueSettlement: (id: string) => rpc<void>("elixir_admin_issue_settlement", { p_id: id }),
+  paySettlement: (id: string) => rpc<void>("elixir_admin_mark_settlement_paid", { p_id: id }),
+  trialBalance: () => rpc<TrialLine[]>("elixir_admin_trial_balance"),
+  partnerSettlements: (brand: string) => rpc<PartnerSettlement[]>("elixir_partner_settlements", { p_brand: brand }),
   partnerBrands: () => rpc<PartnerBrand[]>("elixir_partner_brands"),
   partnerOverview: (brand: string, days: number) => rpc<PartnerOverview>("elixir_partner_overview", { p_brand: brand, p_days: days }),
   partnerKeys: (brand: string) => rpc<PartnerKey[]>("elixir_partner_keys", { p_brand: brand }),

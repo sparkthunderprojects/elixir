@@ -104,6 +104,7 @@ function Dashboard({ brand }: { brand: PartnerBrand }) {
           </section>
         </>
       )}
+      <Statements brandId={brand.brand_id} />
       {brand.role === 'owner' ? <Integration brand={brand} /> : <p className="text-sm text-slate-500">API keys are managed by your account owner.</p>}
     </div>
   );
@@ -149,6 +150,31 @@ x-elixir-key: <your key>
 { "source_ref": "ORDER-1001", "amount": 49.99, "currency": "GBP", "email": "member@example.com" }`}</pre>
       <p className="mt-2 text-xs text-slate-500">Also available: /refund, /check-code, /consume-code. Keep your key in server-side environment variables only.</p>
       {issued && <KeyModal brand={brand.name} apiKey={issued} onClose={() => setIssued(null)} />}
+    </section>
+  );
+}
+
+function Statements({ brandId }: { brandId: string }) {
+  const st = useAsync(() => api.partnerSettlements(brandId), [brandId]);
+  const rows = st.data ?? [];
+  if (rows.length === 0) return null;
+  const d = (x: string) => new Date(x).toLocaleDateString('en-GB', { dateStyle: 'medium' });
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-5">
+      <h2 className="mb-3 font-bold text-slate-900">Funding statements</h2>
+      <table className="w-full text-left text-sm">
+        <thead className="text-xs uppercase text-slate-400"><tr><th className="py-1">Period</th><th className="text-right">Points funded</th><th className="text-right">Amount</th><th className="text-right">Status</th></tr></thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.period_start + r.period_end} className="border-t border-slate-100">
+              <td className="py-1.5">{d(r.period_start)} – {d(r.period_end)}</td>
+              <td className="text-right">{num(r.points_funded)}</td>
+              <td className="text-right font-semibold">{gbp(Number(r.amount_gbp))}</td>
+              <td className={`text-right font-semibold ${r.status === 'paid' ? 'text-emerald-600' : 'text-amber-600'}`}>{r.status === 'paid' ? 'Paid' : 'Due'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </section>
   );
 }
