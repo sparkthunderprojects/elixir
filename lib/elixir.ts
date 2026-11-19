@@ -178,7 +178,18 @@ export interface ReferralSettings { enabled: boolean; bonus_referrer: number; bo
 export interface AffMerchant { id: string; slug: string; name: string; description: string | null; url_template: string; points_per_gbp: number; active: boolean }
 export interface AffConversion { id: string; merchant: string; member: string; order_ref: string; sale_gbp: number; points: number; status: 'pending' | 'confirmed' | 'declined'; created_at: string }
 
+export interface Campaign { id: string; title: string; body: string | null; link_url: string; starts_on: string; ends_on: string; status: 'draft' | 'pending' | 'approved' | 'rejected'; reject_reason?: string | null; fee_gbp: number; fee_status: 'none' | 'billed' | 'paid'; impressions: number; clicks: number }
+export interface AdminCampaign extends Campaign { brand: string }
+
 export const api = {
+  partnerCampaigns: (brand: string) => rpc<Campaign[]>("elixir_partner_campaigns", { p_brand: brand }),
+  partnerSaveCampaign: (brand: string, p: Partial<Campaign>) => rpc<string>("elixir_partner_save_campaign", { p_brand: brand, p }),
+  partnerSubmitCampaign: (brand: string, id: string) => rpc<void>("elixir_partner_submit_campaign", { p_brand: brand, p_id: id }),
+  adminCampaigns: () => rpc<AdminCampaign[]>("elixir_admin_campaigns"),
+  reviewCampaign: (id: string, decision: "approved" | "rejected", fee: number, reason: string | null) =>
+    rpc<void>("elixir_admin_review_campaign", { p_id: id, p_decision: decision, p_fee: fee, p_reason: reason }),
+  billCampaign: (id: string) => rpc<void>("elixir_admin_bill_campaign", { p_id: id }),
+  campaignPaid: (id: string) => rpc<void>("elixir_admin_campaign_paid", { p_id: id }),
   affMerchantsAdmin: () => rpc<AffMerchant[]>("elixir_admin_affiliate_merchants"),
   saveAffMerchant: (p: Partial<AffMerchant>) => rpc<string>("elixir_admin_save_affiliate_merchant", { p }),
   recordConversion: (merchant: string, orderRef: string, sale: number, click: string | null, email: string | null) =>

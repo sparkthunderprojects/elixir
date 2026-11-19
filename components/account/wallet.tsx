@@ -7,6 +7,7 @@ import { Loader2, Copy, Check } from 'lucide-react';
 import { getElixirClient } from '@/lib/elixir-client';
 import { CardCodes } from '@/components/account/card-codes';
 import { InviteCard } from '@/components/account/invite';
+import { Offers } from '@/components/account/offers';
 import { OnlineShops } from '@/components/account/online-shops';
 
 interface Me {
@@ -149,6 +150,8 @@ export default function Wallet() {
           </ul>
         )}
       </section>
+
+      <Offers />
 
       <OnlineShops />
 

@@ -104,6 +104,7 @@ function Dashboard({ brand }: { brand: PartnerBrand }) {
           </section>
         </>
       )}
+      <Campaigns brand={brand} />
       <Statements brandId={brand.brand_id} />
       {brand.role === 'owner' ? <Integration brand={brand} /> : <p className="text-sm text-slate-500">API keys are managed by your account owner.</p>}
     </div>
@@ -175,6 +176,73 @@ function Statements({ brandId }: { brandId: string }) {
           ))}
         </tbody>
       </table>
+    </section>
+  );
+}
+
+const today = () => new Date().toISOString().slice(0, 10);
+const inDays = (n: number) => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+const STATUS: Record<string, string> = { draft: 'Draft', pending: 'In review', approved: 'Approved', rejected: 'Needs changes' };
+
+function Campaigns({ brand }: { brand: PartnerBrand }) {
+  const list = useAsync(() => api.partnerCampaigns(brand.brand_id), [brand.brand_id]);
+  const owner = brand.role === 'owner';
+  const empty = { id: '', title: '', body: '', link_url: '', starts_on: today(), ends_on: inDays(14) };
+  const [f, setF] = useState(empty);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const rows = list.data ?? [];
+  if (!owner && rows.length === 0) return null;
+
+  const run = async (fn: () => Promise<unknown>) => { setError(null); try { await fn(); list.reload(); } catch (e) { setError(errMsg(e)); } };
+  const save = () => run(async () => {
+    await api.partnerSaveCampaign(brand.brand_id, { id: f.id || undefined, title: f.title, body: f.body || null, link_url: f.link_url, starts_on: f.starts_on, ends_on: f.ends_on } as never);
+    setOpen(false); setF(empty);
+  });
+  const inp = 'w-full rounded-lg border border-slate-200 px-3 py-1.5 text-sm';
+
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-5">
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="font-bold text-slate-900">Campaigns</h2>
+        {owner && !open && <button onClick={() => { setF(empty); setOpen(true); }} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold hover:bg-slate-50">New campaign</button>}
+      </div>
+      <p className="mb-3 text-xs text-slate-500">Offers shown to Elixir members. Every campaign is reviewed by Elixir 360 before it goes live, and any fee is agreed at approval.</p>
+      <ErrorNote message={error ?? list.error} />
+      {open && (
+        <div className="mb-4 grid gap-2 rounded-xl bg-slate-50 p-3 sm:grid-cols-2">
+          <input className={`${inp} sm:col-span-2`} maxLength={80} placeholder="Headline (max 80 characters)" value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
+          <textarea className={`${inp} sm:col-span-2`} maxLength={280} rows={2} placeholder="Short description (max 280 characters)" value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} />
+          <input className={`${inp} sm:col-span-2`} placeholder="https://your-landing-page" value={f.link_url} onChange={(e) => setF({ ...f, link_url: e.target.value })} />
+          <label className="text-xs text-slate-500">Starts<input type="date" className={inp} value={f.starts_on} onChange={(e) => setF({ ...f, starts_on: e.target.value })} /></label>
+          <label className="text-xs text-slate-500">Ends<input type="date" className={inp} value={f.ends_on} onChange={(e) => setF({ ...f, ends_on: e.target.value })} /></label>
+          <div className="flex gap-2 sm:col-span-2">
+            <button disabled={!f.title || !f.link_url} onClick={() => void save()} className="rounded-lg bg-elixir px-4 py-1.5 text-sm font-bold text-white disabled:opacity-50">Save draft</button>
+            <button onClick={() => setOpen(false)} className="rounded-lg px-4 py-1.5 text-sm text-slate-500">Cancel</button>
+          </div>
+        </div>
+      )}
+      <ul className="space-y-2">
+        {rows.map((c) => (
+          <li key={c.id} className="rounded-xl border border-slate-100 p-3 text-sm">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="font-semibold text-slate-900">{c.title}</p>
+                <p className="text-xs text-slate-500">{c.starts_on} → {c.ends_on} · {num(c.impressions)} views · {num(c.clicks)} clicks{c.status === 'approved' && c.fee_gbp > 0 ? ` · fee ${gbp(Number(c.fee_gbp))} (${c.fee_status === 'none' ? 'to be invoiced' : c.fee_status})` : ''}</p>
+                {c.status === 'rejected' && c.reject_reason && <p className="mt-1 text-xs text-danger-600">Reviewer note: {c.reject_reason}</p>}
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold">{STATUS[c.status]}</span>
+                {owner && (c.status === 'draft' || c.status === 'rejected') && <>
+                  <button onClick={() => { setF({ id: c.id, title: c.title, body: c.body ?? '', link_url: c.link_url, starts_on: c.starts_on, ends_on: c.ends_on }); setOpen(true); }} className="text-xs font-semibold text-slate-600 hover:underline">Edit</button>
+                  {c.status === 'draft' && <button onClick={() => void run(() => api.partnerSubmitCampaign(brand.brand_id, c.id))} className="text-xs font-semibold text-elixir hover:underline">Submit</button>}
+                </>}
+              </div>
+            </div>
+          </li>
+        ))}
+        {rows.length === 0 && <li className="text-sm text-slate-400">No campaigns yet.</li>}
+      </ul>
     </section>
   );
 }

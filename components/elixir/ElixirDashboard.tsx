@@ -9,13 +9,14 @@ import { formatCurrency, formatNumber } from "@/lib/elixir-format";
 import { ErrorNote, KpiCard, Loading } from "./ui";
 import { AdjustmentsView, MembersView } from "./MembersView";
 import { RewardsView } from "./RewardsView";
+import { CampaignsView } from "./CampaignsView";
 import { AffiliateView } from "./AffiliateView";
 import { SettlementView } from "./SettlementView";
 import { LiabilityView } from "./LiabilityView";
 import { EnquiriesView } from "./EnquiriesView";
 import { BrandsView, SettingsView } from "./AdminViews";
 
-type View = "overview" | "members" | "rewards" | "adjustments" | "liability" | "settlement" | "affiliate" | "enquiries" | "brands" | "settings";
+type View = "overview" | "members" | "rewards" | "adjustments" | "liability" | "settlement" | "affiliate" | "campaigns" | "enquiries" | "brands" | "settings";
 
 export function ElixirDashboard() {
   const { staff } = useAuth();
@@ -38,6 +39,7 @@ export function ElixirDashboard() {
         <Tab id="adjustments" view={view} set={setView} icon={<History className="h-4 w-4" />} label="Adjustments" />
         <Tab id="liability" view={view} set={setView} icon={<Scale className="h-4 w-4" />} label="Liability" />
         {isAdmin && <Tab id="settlement" view={view} set={setView} icon={<Wallet className="h-4 w-4" />} label="Settlement" />}
+        {isAdmin && <Tab id="campaigns" view={view} set={setView} icon={<Award className="h-4 w-4" />} label="Campaigns" />}
         <Tab id="affiliate" view={view} set={setView} icon={<Coins className="h-4 w-4" />} label="Affiliate" />
         <Tab id="enquiries" view={view} set={setView} icon={<Inbox className="h-4 w-4" />} label={newCount ? `Enquiries (${newCount})` : "Enquiries"} />
         {isAdmin && <Tab id="brands" view={view} set={setView} icon={<KeyRound className="h-4 w-4" />} label="Brands & Keys" />}
@@ -51,6 +53,7 @@ export function ElixirDashboard() {
       {view === "adjustments" && <AdjustmentsView />}
       {view === "liability" && <LiabilityView isAdmin={isAdmin} />}
       {view === "settlement" && isAdmin && <SettlementView />}
+      {view === "campaigns" && isAdmin && <CampaignsView />}
       {view === "affiliate" && <AffiliateView isAdmin={isAdmin} />}
       {view === "enquiries" && <EnquiriesView onChange={enq.reload} />}
       {view === "brands" && isAdmin && <BrandsView />}
