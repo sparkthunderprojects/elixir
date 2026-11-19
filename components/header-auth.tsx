@@ -44,9 +44,12 @@ export default function HeaderAuth({ labels }: { labels: { signin: string; join:
   if (email === undefined) return <span className="h-10 w-28" aria-hidden="true" />;
   if (email) {
     return (
+      <>
+      <Link href="/account" className="rounded-xl bg-elixir px-4 py-2 text-sm font-bold text-white hover:bg-elixir-dark">My Elixir</Link>
       <button onClick={signOut} className="inline-flex items-center gap-2 rounded-xl border-2 border-elixir px-4 py-2 text-sm font-bold text-elixir hover:bg-elixir/5">
         <LogOut className="h-4 w-4" /> {labels.signout}
       </button>
+      </>
     );
   }
   return (

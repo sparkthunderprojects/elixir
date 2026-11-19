@@ -6,12 +6,13 @@ export async function middleware(request: NextRequest) {
   if (!configured) return response;
   const path = request.nextUrl.pathname;
   const isAdmin = path === '/admin' || path.startsWith('/admin/');
-  if (isAdmin && !user) return redirectWithCookies(request, response, `/login?next=${encodeURIComponent(path)}`);
-  if (!isAdmin && user && (path === '/login' || path === '/signup')) {
+  const isAccount = path === '/account' || path.startsWith('/account/');
+  if ((isAdmin || isAccount) && !user) return redirectWithCookies(request, response, `/login?next=${encodeURIComponent(path)}`);
+  if (!isAdmin && !isAccount && user && (path === '/login' || path === '/signup')) {
     return redirectWithCookies(request, response, '/');
   }
   return response ?? NextResponse.next();
 }
 
 // Public pages are not matched, so they stay fast and static.
-export const config = { matcher: ['/admin', '/admin/:path*', '/login', '/signup'] };
+export const config = { matcher: ['/admin', '/admin/:path*', '/account', '/account/:path*', '/login', '/signup'] };
