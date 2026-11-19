@@ -104,6 +104,7 @@ function Dashboard({ brand }: { brand: PartnerBrand }) {
           </section>
         </>
       )}
+      <Insights brandId={brand.brand_id} />
       <Campaigns brand={brand} />
       <Statements brandId={brand.brand_id} />
       {brand.role === 'owner' ? <Integration brand={brand} /> : <p className="text-sm text-slate-500">API keys are managed by your account owner.</p>}
@@ -243,6 +244,40 @@ function Campaigns({ brand }: { brand: PartnerBrand }) {
         ))}
         {rows.length === 0 && <li className="text-sm text-slate-400">No campaigns yet.</li>}
       </ul>
+    </section>
+  );
+}
+
+const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const pct = (n: number | null) => (n == null ? '–' : `${Math.round(n * 100)}%`);
+
+function Insights({ brandId }: { brandId: string }) {
+  const ins = useAsync(() => api.partnerInsights(brandId, 90), [brandId]);
+  const d = ins.data;
+  if (!d || d.orders === 0) return null;
+  const max = Math.max(1, ...d.by_weekday.map((x) => x.orders));
+  const tile = (label: string, value: string, sub?: string) => (
+    <div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-500">{label}</p><p className="text-xl font-bold text-slate-900">{value}</p>{sub && <p className="text-xs text-slate-400">{sub}</p>}</div>
+  );
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-5">
+      <h2 className="font-bold text-slate-900">Customer insights <span className="text-xs font-normal text-slate-400">last {d.days} days</span></h2>
+      <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {tile('New members', num(d.new_members), `${num(d.returning_members)} returning`)}
+        {tile('Repeat shoppers', pct(d.repeat_rate), `${num(d.repeat_members)} of ${num(d.members)} bought twice+`)}
+        {tile('Average order', d.avg_order_gbp == null ? '–' : gbp(Number(d.avg_order_gbp)), `${d.orders_per_member ?? '–'} orders per member`)}
+        {tile('Also shop elsewhere', d.small_audience ? 'Not enough data' : pct(d.cross_shop_rate), 'at other Elixir brands')}
+      </div>
+      <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Orders by weekday</p>
+      <div className="mt-2 flex h-24 items-end gap-2">
+        {d.by_weekday.map((x) => (
+          <div key={x.dow} className="flex flex-1 flex-col items-center gap-1">
+            <div className="w-full rounded-t bg-elixir/80" style={{ height: `${Math.max(3, (x.orders / max) * 100)}%` }} title={`${x.orders} orders`} />
+            <span className="text-[10px] text-slate-400">{DOW[x.dow - 1]}</span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 text-xs text-slate-400">Combined figures only. Figures that could point to individual people are hidden when there are fewer than 10 shoppers.</p>
     </section>
   );
 }

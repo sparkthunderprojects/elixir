@@ -181,7 +181,21 @@ export interface AffConversion { id: string; merchant: string; member: string; o
 export interface Campaign { id: string; title: string; body: string | null; link_url: string; starts_on: string; ends_on: string; status: 'draft' | 'pending' | 'approved' | 'rejected'; reject_reason?: string | null; fee_gbp: number; fee_status: 'none' | 'billed' | 'paid'; impressions: number; clicks: number }
 export interface AdminCampaign extends Campaign { brand: string }
 
+export interface PartnerInsights {
+  days: number; members: number; orders: number; avg_order_gbp: number | null; new_members: number; returning_members: number;
+  repeat_members: number; repeat_rate: number | null; orders_per_member: number | null; small_audience: boolean; cross_shop_rate: number | null;
+  by_weekday: { dow: number; orders: number }[];
+}
+export interface AdminInsights {
+  months: number; members_total: number; new_members: number; active_30d: number; points_issued: number; points_redeemed: number;
+  redemption_rate: number | null; multi_brand_rate: number | null;
+  monthly: { month: string; issued: number; redeemed: number; active: number; new_members: number }[];
+  brands: { name: string; spend_gbp: number; orders: number; members: number }[];
+}
+
 export const api = {
+  partnerInsights: (brand: string, days: number) => rpc<PartnerInsights>("elixir_partner_insights", { p_brand: brand, p_days: days }),
+  adminInsights: (months: number) => rpc<AdminInsights>("elixir_admin_insights", { p_months: months }),
   partnerCampaigns: (brand: string) => rpc<Campaign[]>("elixir_partner_campaigns", { p_brand: brand }),
   partnerSaveCampaign: (brand: string, p: Partial<Campaign>) => rpc<string>("elixir_partner_save_campaign", { p_brand: brand, p }),
   partnerSubmitCampaign: (brand: string, id: string) => rpc<void>("elixir_partner_submit_campaign", { p_brand: brand, p_id: id }),
