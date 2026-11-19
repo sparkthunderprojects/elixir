@@ -24,6 +24,8 @@ function DashboardPicture({ title, note }: { title: string; note: string }) {
 
 export default function BusinessView({ p, c, site }: ViewProps) {
   const cards = c.list<{ href: string; status: string; title: string; text: string }>('offer.items');
+  const packages = c.list<{ status: string; title: string; text: string }>('packages.items');
+  const ways = c.list<{ title: string; text: string }>('ways.items');
   const why = c.list<{ title: string; text: string }>('why.items');
   const steps = c.list<{ title: string; text: string }>('steps.items');
   const looks = brandLooks(site);
@@ -61,6 +63,32 @@ export default function BusinessView({ p, c, site }: ViewProps) {
               </li>
             );
           })}
+        </ul>
+      </section>
+
+      <section className="pb-16">
+        <SectionTitle>{c.t('packages.title')}</SectionTitle>
+        <p className="mt-3 text-center text-body">{c.t('packages.text')}</p>
+        <ul className="mt-10 grid gap-5 md:grid-cols-3">
+          {packages.map((k, i) => {
+            const live = k.status.toLowerCase().includes('now');
+            return (
+              <li key={`${i}-${k.title}`} className="card-depth rounded-3xl p-6 sm:p-8">
+                <span className={`rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider ${live ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>{k.status}</span>
+                <h3 className="mt-4 text-xl font-extrabold text-deep">{k.title}</h3>
+                <p className="mt-2 text-body">{k.text}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <h3 className="mt-12 text-center text-xl font-extrabold text-deep">{c.t('ways.title')}</h3>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {ways.map((w, i) => (
+            <li key={`${i}-${w.title}`} className="rounded-2xl bg-white/70 p-5 ring-1 ring-black/5">
+              <p className="font-extrabold text-deep">{w.title}</p>
+              <p className="mt-1 text-sm text-body">{w.text}</p>
+            </li>
+          ))}
         </ul>
       </section>
 

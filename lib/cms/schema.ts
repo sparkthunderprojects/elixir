@@ -305,7 +305,7 @@ export const PAGES: PageDef[] = [
       {
         id: 'hero', label: 'Top banner',
         fields: [
-          text('eyebrow', 'Small heading', 'Elixir 360 · for brands and partners'),
+          text('eyebrow', 'Small heading', 'Elixir 360 · Loyalty · Insights · Media · Growth'),
           text('title', 'Heading', 'Reach customers who love to come back'),
           area('text', 'Intro text', 'Elixir 360 is the business side of Elixir Points. Join our rewards coalition to give your customers one points balance they can earn and spend across brands, and learn what keeps them coming back.'),
           text('primary', 'Main button', 'Become a partner'),
@@ -326,6 +326,30 @@ export const PAGES: PageDef[] = [
             { href: '/business/media', status: 'Coming soon', title: 'Media', text: 'Put your brand in front of Elixir members with featured placements and offers across our sites and emails.' },
           ]),
           text('more', 'Link under each card', 'Find out more'),
+        ],
+      },
+      {
+        id: 'packages', label: 'Partner packages',
+        fields: [
+          text('title', 'Section heading', 'Choose how you take part'),
+          text('text', 'Intro', 'Pricing is agreed with each partner, based on size, integration and campaign volume.'),
+          list('items', 'Packages', 'package', 'title', [text('status', 'Label', ''), text('title', 'Title', ''), area('text', 'Text', '')], [
+            { status: 'Available now', title: 'Elixir Partner', text: 'For businesses that want to offer customers Elixir Points when they buy.' },
+            { status: 'In development', title: 'Elixir Growth', text: 'Points plus promotions, customer acquisition and campaign management.' },
+            { status: 'Coming soon', title: 'Elixir 360 Enterprise', text: 'For larger brands: advertising, audience activation, measurement, insights and strategic partnerships.' },
+          ]),
+        ],
+      },
+      {
+        id: 'ways', label: 'Ways to take part',
+        fields: [
+          text('title', 'Section heading', 'Ways to take part'),
+          list('items', 'Types', 'type', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
+            { title: 'Earn partner', text: 'Customers earn Elixir Points when they buy from you.' },
+            { title: 'Redemption partner', text: 'Customers spend Elixir Points with you.' },
+            { title: 'Earn and redeem', text: 'Both: points in, points out, one relationship.' },
+            { title: 'Strategic partner', text: 'Larger arrangements covering co-marketing, campaigns, insight and distribution.' },
+          ]),
         ],
       },
       {
