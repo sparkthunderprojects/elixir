@@ -175,7 +175,16 @@ export interface PartnerSettlement { period_start: string; period_end: string; p
 
 export interface ReferralSettings { enabled: boolean; bonus_referrer: number; bonus_referee: number; min_spend_gbp: number; max_per_member: number; total: number; rewarded: number }
 
+export interface AffMerchant { id: string; slug: string; name: string; description: string | null; url_template: string; points_per_gbp: number; active: boolean }
+export interface AffConversion { id: string; merchant: string; member: string; order_ref: string; sale_gbp: number; points: number; status: 'pending' | 'confirmed' | 'declined'; created_at: string }
+
 export const api = {
+  affMerchantsAdmin: () => rpc<AffMerchant[]>("elixir_admin_affiliate_merchants"),
+  saveAffMerchant: (p: Partial<AffMerchant>) => rpc<string>("elixir_admin_save_affiliate_merchant", { p }),
+  recordConversion: (merchant: string, orderRef: string, sale: number, click: string | null, email: string | null) =>
+    rpc<string>("elixir_admin_record_conversion", { p_merchant: merchant, p_order_ref: orderRef, p_sale_gbp: sale, p_click: click, p_email: email }),
+  setConversion: (id: string, status: "confirmed" | "declined") => rpc<void>("elixir_admin_set_conversion", { p_id: id, p_status: status }),
+  conversions: () => rpc<AffConversion[]>("elixir_admin_conversions"),
   referralSettings: () => rpc<ReferralSettings>("elixir_admin_referral_settings"),
   setReferralSettings: (p: Partial<ReferralSettings>) => rpc<void>("elixir_admin_set_referral_settings", { p }),
   settlements: () => rpc<SettlementRow[]>("elixir_admin_settlements"),
