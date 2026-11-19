@@ -117,6 +117,8 @@ export const PAGES: PageDef[] = [
             image('logo', 'Logo', { src: '', alt: '', width: 0, height: 0 }),
             color('tile', 'Tile colour behind the logo', '#ffffff', 'Pick a colour the logo reads clearly against.'),
             link('href', 'Website address', '', 'Optional. Shows a Visit link on the Brands page.'),
+            image('banner', 'Hero banner picture', { src: '', alt: '', width: 0, height: 0 }, 'The wide picture across the top of the brand\'s own page. Use a landscape image at least 1600 pixels wide. If empty, the tile colour is used.'),
+            text('headline', 'Hero headline', '', 'Optional. Big words on the brand\'s banner. If empty, the brand name is used.'),
             area('about', 'About this brand', '', 'A short paragraph for the brand\'s own page on this site. If left empty, the one-line description is used.'),
           ], [
             { slug: 'sparkthunder-shop', tagline: 'The official Sparkthunder store', logo: { src: '/brands/sparkthunder-shop.png', alt: 'Sparkthunder Shop logo', width: 438, height: 120 }, tile: '#000000', href: 'https://sparkthunder.shop', about: 'The official Sparkthunder store, home to comics, games and merchandise from across the Sparkthunder family. Every order earns Elixir Points.' },

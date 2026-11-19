@@ -15,15 +15,18 @@ export interface BrandLook {
   href?: string;
   /** A short paragraph for the brand's own page. */
   about?: string;
+  /** Wide picture and headline for the brand's own page hero. */
+  banner?: ImageValue;
+  headline?: string;
 }
 
 export type BrandLooks = Record<string, BrandLook>;
 
 export function brandLooks(site: Content): BrandLooks {
   const out: BrandLooks = {};
-  for (const b of site.list<{ slug: string; tagline: string; logo: ImageValue; tile: string; href: string; about: string }>('brands.items')) {
+  for (const b of site.list<{ slug: string; tagline: string; logo: ImageValue; tile: string; href: string; about: string; banner: ImageValue; headline: string }>('brands.items')) {
     if (!b.slug) continue;
-    out[b.slug] = { tagline: b.tagline, logo: b.logo?.src ? b.logo : undefined, tile: b.tile || '#ffffff', href: b.href || undefined, about: b.about || undefined };
+    out[b.slug] = { tagline: b.tagline, logo: b.logo?.src ? b.logo : undefined, tile: b.tile || '#ffffff', href: b.href || undefined, about: b.about || undefined, banner: b.banner?.src ? b.banner : undefined, headline: b.headline || undefined };
   }
   return out;
 }
