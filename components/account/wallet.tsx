@@ -9,6 +9,7 @@ import { CardCodes } from '@/components/account/card-codes';
 
 interface Me {
   enrolled: boolean; card_no: string; display_name: string | null; joined_at: string;
+  expiry_months: number | null; expires_on: string | null;
   balance: number; balance_gbp: number; lifetime_earned: number; lifetime_redeemed: number;
   tier: { name: string; color: string; earn_multiplier: number; perks: string[] };
   window_spend_gbp: number; next_tier: { name: string; spend_needed_gbp: number } | null;
@@ -103,6 +104,14 @@ export default function Wallet() {
           </div>
         </div>
       </section>
+
+      {me.expires_on && me.balance > 0 && (() => {
+        const days = Math.ceil((new Date(me.expires_on).getTime() - Date.now()) / 864e5);
+        if (days > 60) return null;
+        return <p role="status" className="rounded-xl bg-amber-50 px-4 py-3 text-sm font-medium text-amber-900">
+          {days <= 0 ? 'Your points are due to expire.' : `Your points will expire in ${days} day${days === 1 ? '' : 's'}.`} Earn or spend any points before {day(me.expires_on)} to keep them. Points expire after {me.expiry_months} months with no activity.
+        </p>;
+      })()}
 
       {note && <p role="status" className={`rounded-xl px-4 py-3 text-sm font-medium ${note.ok ? 'bg-emerald-50 text-emerald-800' : 'bg-rose-50 text-rose-800'}`}>{note.text}</p>}
 

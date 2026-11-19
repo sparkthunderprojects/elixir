@@ -148,6 +148,16 @@ export interface EnquiryRow {
 }
 export interface EnquiryList { new_count: number; total: number; rows: EnquiryRow[] }
 
+export interface Liability {
+  redeem_points_per_gbp: number; expiry_months: number | null; members_with_balance: number;
+  outstanding_points: number; outstanding_gbp: number; issued_points: number; redeemed_points: number; expired_points: number; breakage_pct: number; codes_unused: number;
+  ageing: { bucket: string; members: number; points: number }[];
+  monthly: { month: string; issued: number; redeemed: number; expired: number }[];
+  expiring_soon: { members: number; points: number } | null;
+}
+export interface ExpiryPolicy { months: number | null; due_members: number; due_points: number }
+export interface ExpiryRun { dry_run: boolean; members: number; points: number; more_to_do: boolean }
+
 export const api = {
   whoami: () => rpc<Staff | null>("elixir_whoami"),
   overview: () => rpc<Overview>("elixir_admin_overview"),
@@ -172,6 +182,10 @@ export const api = {
   updateEnquiry: (id: string, status: string, notes: string | null) => rpc<void>("elixir_admin_update_enquiry", { p_id: id, p_status: status, p_notes: notes }),
   submitEnquiry: (p: { company: string; contact_name: string; email: string; website: string; interests: string[]; message: string }) =>
     rpc<{ ok: boolean }>("elixir_submit_enquiry", { p }),
+  liability: () => rpc<Liability>("elixir_admin_liability"),
+  expiryPolicy: () => rpc<ExpiryPolicy>("elixir_admin_expiry_policy"),
+  setExpiryPolicy: (months: number | null) => rpc<void>("elixir_admin_set_expiry_policy", { p_months: months }),
+  runExpiry: (dryRun: boolean) => rpc<ExpiryRun>("elixir_admin_run_expiry", { p_dry_run: dryRun }),
   config: () => rpc<Config>("elixir_admin_config"),
   saveConfig: (c: Config) => rpc<void>("elixir_admin_save_config", { p: c }),
 };
