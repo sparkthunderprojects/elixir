@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Loader2, Copy, Check } from 'lucide-react';
 import { getElixirClient } from '@/lib/elixir-client';
 import { CardCodes } from '@/components/account/card-codes';
+import { InviteCard } from '@/components/account/invite';
 
 interface Me {
   enrolled: boolean; card_no: string; display_name: string | null; joined_at: string;
@@ -147,6 +148,8 @@ export default function Wallet() {
           </ul>
         )}
       </section>
+
+      <InviteCard />
 
       <section>
         <h2 className="text-xl font-extrabold text-deep">Your history</h2>

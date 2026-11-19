@@ -157,6 +157,7 @@ export function SettingsView() {
     <div className="space-y-6">
       <Toast message={toast} />
       <ErrorNote message={cfg.error ?? tiers.error} />
+      <ReferralPanel />
       {cfg.data && <ConfigForm initial={cfg.data} onSaved={() => { flash("Programme settings saved"); cfg.reload(); }} />}
       <div>
         <h3 className="mb-3 text-base font-semibold text-slate-900 dark:text-slate-100">Tiers</h3>
@@ -255,6 +256,47 @@ function BrandUsersPanel({ brandId }: { brandId: string }) {
           <option value="staff">Staff (view only)</option>
         </select>
         <button onClick={() => void run(async () => { await api.addBrandUser(brandId, email, role); setEmail(""); })} disabled={!email.trim()} className="btn-secondary py-1 text-xs"><Plus className="h-3.5 w-3.5" />Link</button>
+      </div>
+    </div>
+  );
+}
+
+function ReferralPanel() {
+  const ref = useAsync(() => api.referralSettings(), []);
+  const [f, setF] = useState<{ bonus_referrer: string; bonus_referee: string; min_spend_gbp: string; max_per_member: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+  const d = ref.data;
+  if (!d) return ref.error ? <ErrorNote message={ref.error} /> : null;
+  const v = f ?? { bonus_referrer: String(d.bonus_referrer), bonus_referee: String(d.bonus_referee), min_spend_gbp: String(d.min_spend_gbp), max_per_member: String(d.max_per_member) };
+  const save = async (patch: Partial<typeof d>) => {
+    setError(null); setMsg(null);
+    try { await api.setReferralSettings(patch); setMsg("Saved"); setF(null); ref.reload(); } catch (e) { setError(errMsg(e)); }
+  };
+  const field = (k: keyof typeof v, label: string) => (
+    <label className="text-sm text-slate-600">{label}
+      <input type="number" min={0} value={v[k]} onChange={(e) => setF({ ...v, [k]: e.target.value })} className="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-1.5 dark:border-slate-600 dark:bg-slate-900" />
+    </label>
+  );
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="font-bold text-slate-900 dark:text-slate-100">Referrals</h3>
+          <p className="text-xs text-slate-500">{d.total} referred · {d.rewarded} rewarded. Bonus points are funded by Elixir, not partners.</p>
+        </div>
+        <label className="flex items-center gap-2 text-sm text-slate-600">{d.enabled ? "On" : "Off"}<Toggle on={d.enabled} onChange={(on) => void save({ enabled: on })} /></label>
+      </div>
+      <ErrorNote message={error} />
+      <div className="mt-3 grid gap-3 sm:grid-cols-4">
+        {field("bonus_referrer", "Referrer bonus (pts)")}
+        {field("bonus_referee", "Friend bonus (pts)")}
+        {field("min_spend_gbp", "Min first spend (£)")}
+        {field("max_per_member", "Max referrals each")}
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+        <button onClick={() => void save({ bonus_referrer: Number(v.bonus_referrer), bonus_referee: Number(v.bonus_referee), min_spend_gbp: Number(v.min_spend_gbp), max_per_member: Number(v.max_per_member) })} className="btn-primary bg-rose-600 hover:bg-rose-700">Save referral settings</button>
+        {msg && <span className="text-sm text-emerald-600">{msg}</span>}
       </div>
     </div>
   );

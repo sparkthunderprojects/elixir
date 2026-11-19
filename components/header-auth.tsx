@@ -25,14 +25,31 @@ export default function HeaderAuth({ labels }: { labels: { signin: string; join:
       }
       supabase.rpc('elixir_join').then(() => undefined, () => undefined);
     };
+    try {
+      const ref = new URLSearchParams(window.location.search).get('ref');
+      if (ref && /^[A-Za-z0-9]{4,16}$/.test(ref)) localStorage.setItem('elixir-ref', ref.toUpperCase());
+    } catch { /* storage unavailable */ }
+    const claimRef = () => {
+      let ref: string | null = null;
+      try { ref = localStorage.getItem('elixir-ref'); } catch { /* ignore */ }
+      if (!ref) return;
+      // Joining happens first so the member row exists; the claim is a one-shot and safe to repeat.
+      supabase.rpc('elixir_join').then(() => supabase.rpc('elixir_claim_referral', { p_code: ref }))
+        .then(({ data }) => {
+          const reason = (data as { reason?: string } | null)?.reason;
+          if (data && (data as { ok?: boolean }).ok || reason === 'already_referred' || reason === 'already_earned' || reason === 'own_code' || reason === 'unknown_code' || reason === 'limit_reached') {
+            try { localStorage.removeItem('elixir-ref'); } catch { /* ignore */ }
+          }
+        }, () => undefined);
+    };
     const checkPartner = () => supabase.rpc('elixir_partner_brands').then(({ data }) => setPartner(Array.isArray(data) && data.length > 0), () => undefined);
     supabase.auth.getUser().then(({ data }) => {
       setEmail(data.user?.email ?? null);
-      if (data.user) { join(); void checkPartner(); }
+      if (data.user) { join(); claimRef(); void checkPartner(); }
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
       setEmail(session?.user?.email ?? null);
-      if (session?.user) { join(); void checkPartner(); } else setPartner(false);
+      if (session?.user) { join(); claimRef(); void checkPartner(); } else setPartner(false);
     });
     return () => sub.subscription.unsubscribe();
   }, []);

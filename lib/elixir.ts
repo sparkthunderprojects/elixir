@@ -173,7 +173,11 @@ export interface SettlementRow { id: string; brand: string; period_start: string
 export interface TrialLine { code: string; name: string; kind: string; debit: number; credit: number }
 export interface PartnerSettlement { period_start: string; period_end: string; points_funded: number; amount_gbp: number; status: 'issued' | 'paid'; issued_at: string | null; paid_at: string | null }
 
+export interface ReferralSettings { enabled: boolean; bonus_referrer: number; bonus_referee: number; min_spend_gbp: number; max_per_member: number; total: number; rewarded: number }
+
 export const api = {
+  referralSettings: () => rpc<ReferralSettings>("elixir_admin_referral_settings"),
+  setReferralSettings: (p: Partial<ReferralSettings>) => rpc<void>("elixir_admin_set_referral_settings", { p }),
   settlements: () => rpc<SettlementRow[]>("elixir_admin_settlements"),
   generateSettlements: (from: string, to: string) => rpc<{ created: number }>("elixir_admin_generate_settlements", { p_from: from, p_to: to }),
   issueSettlement: (id: string) => rpc<void>("elixir_admin_issue_settlement", { p_id: id }),
