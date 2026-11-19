@@ -163,18 +163,6 @@ export const PAGES: PageDef[] = [
           area('a_text', 'First card text', 'Shop at any participating brand and points land in one shared balance. Refunds take back only the points for the refunded amount.'),
           text('b_title', 'Second card heading', 'Climb the tiers, earn faster'),
           area('b_text', 'Second card text', 'Your tier follows what you spend over {window} months. Reach {top_tier} and every £1 earns {top_multiplier}x points.'),
-          text('c_title', 'Third card heading', 'Shop as a guest, claim later'),
-          area('c_text', 'Third card text', 'Points earned with your email while shopping as a guest are held for you and added to your balance when you join with that email.'),
-        ],
-      },
-      {
-        id: 'tiers', label: 'Tiers',
-        help: 'The tiers themselves (names, spend and multipliers) are set in the dashboard under Settings.',
-        fields: [
-          text('title', 'Heading', 'Four tiers, faster points'),
-          text('start', 'Text for the first tier', 'Where everyone starts'),
-          text('suffix', 'Under each multiplier', 'points on every £1'),
-          text('link', 'Link label', 'Compare the tiers'),
         ],
       },
       {
@@ -183,19 +171,6 @@ export const PAGES: PageDef[] = [
           text('title', 'Heading', 'Spend points on the things you love'),
           area('text', 'Text', '{redeem} points are worth {gbp1}. Choose a reward, get your code, use it at checkout.'),
           text('button', 'Button', 'See rewards'),
-        ],
-      },
-      {
-        id: 'faq', label: 'Questions strip (yellow)',
-        fields: [
-          text('title', 'Heading', 'The best of Elixir at a glance'),
-          list('items', 'Questions', 'question', 'q', [text('q', 'Heading', ''), area('a', 'Answer', '')], [
-            { q: 'One balance for every brand', a: 'Every point you earn at any participating Sparkthunder brand lands in the same balance, and you can spend it at any of them.' },
-            { q: 'Tiers that reward loyalty', a: 'The more you spend over a rolling window, the higher your tier. Each tier earns points faster than the last.' },
-            { q: 'Single-use reward codes', a: 'Choose a reward and you get a single-use code to enter at checkout. Each code works once, so it cannot be reused.' },
-            { q: 'Guest purchases count too', a: 'Shopped as a guest? Points earned with your email are held for you and added when you join with that same verified email.' },
-          ]),
-          text('link', 'Link label', 'More questions answered'),
         ],
       },
       {
@@ -326,19 +301,18 @@ export const PAGES: PageDef[] = [
       {
         id: 'hero', label: 'Top banner',
         fields: [
-          text('eyebrow', 'Small heading', 'Elixir 360 · Loyalty · Insights · Media · Growth'),
-          text('title', 'Heading', 'Reach customers who love to come back'),
-          area('text', 'Intro text', 'Elixir 360 is the business side of Elixir Points. Join our rewards coalition to give your customers one points balance they can earn and spend across brands, and learn what keeps them coming back.'),
+          text('title', 'Heading', 'See what keeps customers coming back'),
+          area('text', 'Intro text', 'Elixir 360 is the business side of Elixir Points: one rewards balance for your customers across brands, and the insight to grow with it.'),
           text('primary', 'Main button', 'Become a partner'),
-          text('secondary', 'Second button', 'See what we offer'),
-          text('dash_title', 'Dashboard picture: title', 'Partner view'),
-          text('dash_note', 'Dashboard picture: note', 'Illustrative example, not real data'),
+          text('secondary', 'Second button', 'Partner login'),
         ],
       },
       {
         id: 'offer', label: 'What we offer',
         fields: [
-          text('title', 'Section heading', 'Three ways to grow with Elixir'),
+          text('label', 'Small label', 'Our services'),
+          text('title', 'Section heading', 'Everything a loyalty partner needs'),
+          area('text', 'Short text', 'Loyalty is live today. Insights and media are on the way.'),
           list('items', 'Cards', 'card', 'title', [
             link('href', 'Page address', ''), text('status', 'Label', ''), text('title', 'Title', ''), area('text', 'Text', ''),
           ], [
@@ -346,54 +320,14 @@ export const PAGES: PageDef[] = [
             { href: '/business/insights', status: 'Coming soon', title: 'Insights', text: 'Understand repeat purchases and loyalty across the coalition, with customer permission, through a partner dashboard.' },
             { href: '/business/media', status: 'Coming soon', title: 'Media', text: 'Put your brand in front of Elixir members with featured placements and offers across our sites and emails.' },
           ]),
-          text('more', 'Link under each card', 'Find out more'),
         ],
       },
       {
-        id: 'packages', label: 'Partner packages',
+        id: 'work', label: 'How we work',
         fields: [
-          text('title', 'Section heading', 'Choose how you take part'),
-          text('text', 'Intro', 'Pricing is agreed with each partner, based on size, integration and campaign volume.'),
-          list('items', 'Packages', 'package', 'title', [text('status', 'Label', ''), text('title', 'Title', ''), area('text', 'Text', '')], [
-            { status: 'Available now', title: 'Elixir Partner', text: 'For businesses that want to offer customers Elixir Points when they buy.' },
-            { status: 'In development', title: 'Elixir Growth', text: 'Points plus promotions, customer acquisition and campaign management.' },
-            { status: 'Coming soon', title: 'Elixir 360 Enterprise', text: 'For larger brands: advertising, audience activation, measurement, insights and strategic partnerships.' },
-          ]),
-        ],
-      },
-      {
-        id: 'ways', label: 'Ways to take part',
-        fields: [
-          text('title', 'Section heading', 'Ways to take part'),
-          list('items', 'Types', 'type', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
-            { title: 'Earn partner', text: 'Customers earn Elixir Points when they buy from you.' },
-            { title: 'Redemption partner', text: 'Customers spend Elixir Points with you.' },
-            { title: 'Earn and redeem', text: 'Both: points in, points out, one relationship.' },
-            { title: 'Strategic partner', text: 'Larger arrangements covering co-marketing, campaigns, insight and distribution.' },
-          ]),
-        ],
-      },
-      {
-        id: 'why', label: 'Why Elixir',
-        fields: [
-          text('title', 'Section heading', 'Why partner with Elixir'),
-          list('items', 'Reasons', 'reason', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
-            { title: 'One currency, many brands', text: 'Points earned with one brand can be spent with another, so every partner benefits from customers who are already collecting.' },
-            { title: 'Built for a global audience', text: 'Customers earn in their own currency, with local earn rates and values, so Elixir works wherever you sell.' },
-            { title: 'Simple to connect', text: 'Your website sends us each order and refund through a secure server-to-server connection. No customer payment details ever reach us.' },
-            { title: 'Privacy first', text: 'Customer data is only used with their permission, and every point is recorded in a tamper-proof ledger you can audit.' },
-          ]),
-        ],
-      },
-      {
-        id: 'steps', label: 'How partnering works',
-        fields: [
-          text('title', 'Section heading', 'How partnering works'),
-          list('items', 'Steps', 'step', 'title', [text('title', 'Title', ''), area('text', 'Text', '')], [
-            { title: 'Talk to us', text: 'Tell us about your brand and what you would like to achieve. We will come back to you to find the right fit.' },
-            { title: 'Connect', text: 'We set you up with your own secure key and help your developers send orders and refunds to Elixir.' },
-            { title: 'Launch and grow', text: 'Your customers start earning straight away. We track every point issued and redeemed for your brand, so you always know where you stand.' },
-          ]),
+          text('title', 'Small heading', 'How we work'),
+          text('heading', 'Big heading', 'Helping customers get more'),
+          area('text', 'Text', 'You send us each order. Customers earn points in their own currency, spend them across the family, and come back. We handle the points, refunds and statements.'),
         ],
       },
       { id: 'family', label: 'Brands strip', fields: [text('title', 'Heading', 'Already in the family'), text('text', 'Text', 'These brands already earn Elixir Points.')] },

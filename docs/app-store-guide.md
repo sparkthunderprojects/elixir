@@ -79,3 +79,10 @@ Suggested shots: wallet with balance, digital card, a brand page with its hero b
 - **In-app purchases:** the app sells nothing digital, so no Apple or Google cut applies. Do not add paid points purchases without checking the store rules first.
 - **Updating:** change the website and the app updates itself. For a new store version, raise the version number (Android: `versionCode` and `versionName` in `mobile/android/app/build.gradle`; iOS: Version and Build in Xcode), repeat the build steps and upload.
 - **The Android keystore** and your Apple signing are yours alone. I have not created or seen either.
+
+## 7. After the apps are live: turn on the website buttons
+
+The home page shows "App Store" and "Google Play" buttons marked *Coming soon*. Once each app is live, add these in Bolt (environment variables) and redeploy:
+- `NEXT_PUBLIC_ELIXIR_IOS_URL` = your App Store link
+- `NEXT_PUBLIC_ELIXIR_ANDROID_URL` = your Google Play link
+The buttons then become real links. Apple and Google also supply official badge images you may swap in.

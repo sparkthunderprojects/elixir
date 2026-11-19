@@ -51,6 +51,6 @@
 }
 
 /* Inside the mobile app: no website header or footer, room for the bottom tab bar and the phone's safe areas. */
-html.in-app body > header, html.in-app body > footer, html.in-app body > a.sr-only { display: none !important; }
+html.in-app [data-site-chrome] { display: none !important; }
 html.in-app body { padding-top: env(safe-area-inset-top); padding-bottom: calc(4.25rem + env(safe-area-inset-bottom)); -webkit-tap-highlight-color: transparent; }
 html.in-app { overscroll-behavior-y: none; }

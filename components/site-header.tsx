@@ -10,7 +10,7 @@ export default function SiteHeader({ c }: { c: Content }) {
   const nav = c.list<{ href: string; label: string }>('nav.items');
   const mark = c.img('header.mark');
   return (
-    <header className="sticky top-0 z-40 border-b border-white/60 bg-white/75 shadow-[0_10px_30px_-18px_rgba(15,26,48,0.45)] backdrop-blur-xl">
+    <header data-site-chrome className="sticky top-0 z-40 border-b border-white/60 bg-white/75 shadow-[0_10px_30px_-18px_rgba(15,26,48,0.45)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-none items-center justify-between gap-4 px-4 sm:px-8 lg:px-12">
         <div className="flex h-full items-center gap-4">
           <Link href="/" aria-label={`${c.t('header.name_main')} ${c.t('header.name_light')} ${c.t('header.strapline')}, home`} className="shrink-0">

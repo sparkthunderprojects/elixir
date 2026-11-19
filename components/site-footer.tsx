@@ -8,7 +8,7 @@ export default function SiteFooter({ c }: { c: Content }) {
   const col = 'text-sm text-body hover:text-elixir';
   const head = 'text-sm font-bold text-deep';
   return (
-    <footer className="mt-20 border-t border-black/5 bg-white">
+    <footer data-site-chrome className="mt-20 border-t border-black/5 bg-white">
       <div className="mx-auto grid max-w-none gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div>
           <p className={head}>{c.t('footer.explore_heading')}</p>
