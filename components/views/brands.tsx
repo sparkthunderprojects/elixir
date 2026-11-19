@@ -4,6 +4,7 @@ import PageShell from '@/components/page-shell';
 import BrandTile from '@/components/brand-tile';
 import JsonLd from '@/components/json-ld';
 import { brandLooks, sortBrands } from '@/lib/brands';
+import { brandPath } from '@/lib/site';
 import type { ViewProps } from '@/components/views/home';
 
 export default function BrandsView({ p, c, site }: ViewProps) {
@@ -20,9 +21,9 @@ export default function BrandsView({ p, c, site }: ViewProps) {
           const look = looks[b.slug];
           return (
             <li key={b.slug} className="flex flex-col card-depth rounded-3xl p-4">
-              <BrandTile look={look} name={b.name} className="h-44" />
+              <Link href={brandPath(b.slug)} aria-label={b.name}><BrandTile look={look} name={b.name} className="h-44" /></Link>
               <div className="flex flex-1 flex-col p-3 pt-5">
-                <h2 className="text-xl font-extrabold text-deep">{b.name}</h2>
+                <h2 className="text-xl font-extrabold text-deep"><Link href={brandPath(b.slug)} className="hover:text-elixir">{b.name}</Link></h2>
                 <p className="mt-1 text-sm text-body">{look?.tagline || (b.brand_type === 'partner' ? c.t('cards.partner') : c.t('cards.owned'))}</p>
                 {look?.href && <a href={safeHref(look.href)} className="mt-4 text-sm font-bold text-elixir underline underline-offset-4" rel="noopener">{c.t('cards.visit', { brand: b.name })}</a>}
               </div>

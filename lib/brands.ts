@@ -13,15 +13,17 @@ export interface BrandLook {
   tile: string;
   /** Public website, only where it is known. */
   href?: string;
+  /** A short paragraph for the brand's own page. */
+  about?: string;
 }
 
 export type BrandLooks = Record<string, BrandLook>;
 
 export function brandLooks(site: Content): BrandLooks {
   const out: BrandLooks = {};
-  for (const b of site.list<{ slug: string; tagline: string; logo: ImageValue; tile: string; href: string }>('brands.items')) {
+  for (const b of site.list<{ slug: string; tagline: string; logo: ImageValue; tile: string; href: string; about: string }>('brands.items')) {
     if (!b.slug) continue;
-    out[b.slug] = { tagline: b.tagline, logo: b.logo?.src ? b.logo : undefined, tile: b.tile || '#ffffff', href: b.href || undefined };
+    out[b.slug] = { tagline: b.tagline, logo: b.logo?.src ? b.logo : undefined, tile: b.tile || '#ffffff', href: b.href || undefined, about: b.about || undefined };
   }
   return out;
 }

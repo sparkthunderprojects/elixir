@@ -50,7 +50,7 @@ export default function HomeView({ p, c, site }: ViewProps) {
         </div>
         <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {sortBrands(p.brands).slice(0, 9).map((b) => (
-            <li key={b.slug} className="lift rounded-2xl shadow-[0_14px_24px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/25"><BrandTile look={looks[b.slug]} name={b.name} className="h-36" /></li>
+            <li key={b.slug} className="lift rounded-2xl shadow-[0_14px_24px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/25"><Link href={`/brands/${b.slug}`} aria-label={b.name}><BrandTile look={looks[b.slug]} name={b.name} className="h-36" /></Link></li>
           ))}
           <li className="flex h-36 items-center justify-center glass rounded-2xl border-2 border-dashed border-white/50 p-3 text-center text-sm font-bold text-white">{c.t('brands.more')}</li>
         </ul>
