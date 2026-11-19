@@ -4,8 +4,8 @@ import { cookies } from 'next/headers';
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@/lib/config';
 
 /** Server client that reads and refreshes the member's session cookies. */
-export function createServerSupabase(): SupabaseClient {
-  const cookieStore = cookies();
+export async function createServerSupabase(): Promise<SupabaseClient> {
+  const cookieStore = await cookies();
   return createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     cookies: {
       getAll() {

@@ -9,7 +9,8 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: 'Preview', robots: { index: false, follow: false } };
 
 /** What a page will look like once the draft is published. Staff only; the database refuses anyone else. */
-export default async function Preview({ params }: { params: { slug: string } }) {
+export default async function Preview(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const View = VIEWS[params.slug];
   if (!View || !PAGE_BY_SLUG[params.slug]) notFound();
   const p = await getProgramme();

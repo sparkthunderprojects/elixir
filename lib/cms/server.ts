@@ -30,7 +30,7 @@ export async function getContent(slug: string, p: Programme): Promise<Content> {
 
 /** The unpublished draft of a page, for staff previews. Throws if the visitor is not staff. */
 export async function getDraftContent(slug: string, p: Programme): Promise<Content> {
-  const { data, error } = await createServerSupabase().rpc('elixir_cms_get', { p_slug: slug });
+  const { data, error } = await (await createServerSupabase()).rpc('elixir_cms_get', { p_slug: slug });
   if (error) throw new Error(error.message);
   const draft = (data as { draft?: Record<string, unknown> } | null)?.draft;
   return makeContent(slug, draft, buildVars(p));

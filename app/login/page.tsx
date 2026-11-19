@@ -3,7 +3,8 @@ import LoginForm from '@/components/login-form';
 
 export const metadata = { title: 'Sign in', robots: { index: false, follow: false } };
 
-export default function Page({ searchParams }: { searchParams?: { next?: string } }) {
+export default async function Page(props: { searchParams?: Promise<{ next?: string }> }) {
+  const searchParams = await props.searchParams;
   return (
     <div className="mx-auto max-w-md px-4 py-14">
       <h1 className="text-2xl font-bold text-deep">Sign in</h1>
