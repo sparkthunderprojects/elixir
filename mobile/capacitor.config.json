@@ -1,0 +1,18 @@
+{
+  "appId": "com.sparkthunder.elixir",
+  "appName": "Elixir Points",
+  "webDir": "www",
+  "appendUserAgent": "ElixirApp",
+  "server": {
+    "url": "https://elixirpoints.com/account",
+    "cleartext": false,
+    "allowNavigation": ["elixirpoints.com", "*.elixirpoints.com", "*.supabase.co"]
+  },
+  "ios": { "contentInset": "never", "backgroundColor": "#ffffff", "scheme": "Elixir Points" },
+  "android": { "backgroundColor": "#ffffff", "allowMixedContent": false },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 1200, "backgroundColor": "#ffffff", "showSpinner": false },
+    "StatusBar": { "style": "LIGHT", "backgroundColor": "#ffffff" },
+    "Keyboard": { "resize": "body" }
+  }
+}

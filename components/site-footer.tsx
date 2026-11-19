@@ -27,6 +27,7 @@ export default function SiteFooter({ c }: { c: Content }) {
           <ul className="mt-4 space-y-3">
             <li><a href={`${MYSPARKTHUNDER_URL}/terms`} className={col}>{c.t('footer.terms')}</a></li>
             <li><a href={`${MYSPARKTHUNDER_URL}/privacy`} className={col}>{c.t('footer.privacy')}</a></li>
+            <li><Link href="/support" className={col}>Support</Link></li>
           </ul>
         </div>
         <div>

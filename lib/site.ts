@@ -13,7 +13,7 @@ export const NAV = [
 ];
 
 /** Pages that appear in the sitemap. */
-export const PUBLIC_PATHS = ['/', '/how-it-works', '/tiers', '/rewards', '/brands', '/faq', '/business', '/business/loyalty', '/business/insights', '/business/media', '/business/about', '/business/contact'];
+export const PUBLIC_PATHS = ['/', '/how-it-works', '/tiers', '/rewards', '/brands', '/faq', '/business', '/business/loyalty', '/business/insights', '/business/media', '/business/about', '/business/contact', '/support'];
 
 /** Address of a brand's own page. */
 export const brandPath = (slug: string) => `/brands/${slug}`;

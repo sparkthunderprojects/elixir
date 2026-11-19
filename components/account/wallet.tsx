@@ -9,6 +9,7 @@ import { CardCodes } from '@/components/account/card-codes';
 import { InviteCard } from '@/components/account/invite';
 import { Offers } from '@/components/account/offers';
 import { OnlineShops } from '@/components/account/online-shops';
+import { AccountSettings } from '@/components/account/delete-account';
 
 interface Me {
   enrolled: boolean; card_no: string; display_name: string | null; joined_at: string;
@@ -170,6 +171,8 @@ export default function Wallet() {
           </ul>
         )}
       </section>
+
+      <AccountSettings />
     </div>
   );
 }

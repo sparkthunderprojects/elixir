@@ -4,6 +4,7 @@ import './elixir.css';
 import SiteHeader from '@/components/site-header';
 import SiteFooter from '@/components/site-footer';
 import JsonLd from '@/components/json-ld';
+import AppShell from '@/components/app-shell';
 import { getContent } from '@/lib/cms/server';
 import { getProgramme } from '@/lib/programme';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const viewport: Viewport = { themeColor: '#1d3557', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#1d3557', width: 'device-width', initialScale: 1, viewportFit: 'cover' };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const site = await getContent('site', await getProgramme());
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SiteHeader c={site} />
         <main id="main" className="flex-1">{children}</main>
         <SiteFooter c={site} />
+        <AppShell />
       </body>
     </html>
   );
