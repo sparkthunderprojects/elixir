@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { safeHref } from '@/lib/safe-href';
 import { MYSPARKTHUNDER_URL } from '@/lib/config';
 import type { Content } from '@/lib/cms/resolve';
 
@@ -11,7 +12,7 @@ export default function SiteFooter({ c }: { c: Content }) {
       <div className="mx-auto grid max-w-none gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div>
           <p className={head}>{c.t('footer.explore_heading')}</p>
-          <ul className="mt-4 space-y-3">{nav.map((n) => <li key={n.href}><Link href={n.href} className={col}>{n.label}</Link></li>)}<li><Link href={c.t('header.business_href') || '/business'} className={col}>{c.t('header.business')}</Link></li></ul>
+          <ul className="mt-4 space-y-3">{nav.map((n) => <li key={n.href}><Link href={safeHref(n.href)} className={col}>{n.label}</Link></li>)}<li><Link href={c.t('header.business_href') || '/business'} className={col}>{c.t('header.business')}</Link></li></ul>
         </div>
         <div>
           <p className={head}>{c.t('footer.account_heading')}</p>

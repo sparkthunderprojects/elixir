@@ -36,7 +36,7 @@ export function SettlementView() {
           <input type="date" value={from} onChange={(e) => setRange([e.target.value, to])} className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-600 dark:bg-slate-900" />
           <span className="text-slate-400">to</span>
           <input type="date" value={to} onChange={(e) => setRange([from, e.target.value])} className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm dark:border-slate-600 dark:bg-slate-900" />
-          <button disabled={busy} onClick={() => void act(async () => { const r = await api.generateSettlements(from, to); setMsg(`${r.created} new draft statement(s)`); })} className="btn-primary bg-rose-600 hover:bg-rose-700">Generate</button>
+          <button disabled={busy} onClick={() => void act(async () => { const r = await api.generateSettlements(from, to); setMsg(`${r.created} new draft statement(s)${r.skipped ? `. ${r.skipped} partner(s) skipped because they already have a statement covering some of these days.` : ''}`); })} className="btn-primary bg-rose-600 hover:bg-rose-700">Generate</button>
         </div>
         {msg && <p className="mt-2 text-sm text-emerald-600">{msg}</p>}
       </div>

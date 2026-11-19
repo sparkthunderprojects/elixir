@@ -45,7 +45,7 @@ function Row({ row, onSave }: { row: EnquiryRow; onSave: (r: EnquiryRow, status:
         <div>
           <h3 className="text-base font-bold text-slate-900">{row.company}</h3>
           <p className="text-sm text-slate-600">{row.contact_name} · <a className="text-rose-600 underline" href={`mailto:${row.email}`}>{row.email}</a></p>
-          {row.website && <p className="text-sm"><a className="text-rose-600 underline" href={row.website} target="_blank" rel="noopener noreferrer">{row.website}</a></p>}
+          {row.website && /^https?:\/\//i.test(row.website) && <p className="text-sm"><a className="text-rose-600 underline" href={row.website} target="_blank" rel="noopener noreferrer">{row.website}</a></p>}
         </div>
         <div className="text-right text-xs text-slate-500">
           <span className={`rounded-full px-2.5 py-1 font-semibold capitalize ${COLOURS[row.status]}`}>{row.status}</span>

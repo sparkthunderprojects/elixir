@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { safeHref } from '@/lib/safe-href';
 import BusinessNav from '@/components/business-nav';
 import BrandTile from '@/components/brand-tile';
 import { ButtonLink, SectionTitle } from '@/components/ui';
@@ -59,7 +60,7 @@ export default function BusinessView({ p, c, site }: ViewProps) {
                 <span className={`self-start rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider ${live ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>{card.status}</span>
                 <h3 className="mt-4 text-2xl font-extrabold text-deep">{card.title}</h3>
                 <p className="mt-2 flex-1 text-body">{card.text}</p>
-                <Link href={card.href} className="mt-5 text-sm font-bold text-elixir underline underline-offset-4">{c.t('offer.more')}</Link>
+                <Link href={safeHref(card.href)} className="mt-5 text-sm font-bold text-elixir underline underline-offset-4">{c.t('offer.more')}</Link>
               </li>
             );
           })}

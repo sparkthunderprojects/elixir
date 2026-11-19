@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { safeHref } from '@/lib/safe-href';
 import PageShell from '@/components/page-shell';
 import BrandTile from '@/components/brand-tile';
 import JsonLd from '@/components/json-ld';
@@ -23,7 +24,7 @@ export default function BrandsView({ p, c, site }: ViewProps) {
               <div className="flex flex-1 flex-col p-3 pt-5">
                 <h2 className="text-xl font-extrabold text-deep">{b.name}</h2>
                 <p className="mt-1 text-sm text-body">{look?.tagline || (b.brand_type === 'partner' ? c.t('cards.partner') : c.t('cards.owned'))}</p>
-                {look?.href && <a href={look.href} className="mt-4 text-sm font-bold text-elixir underline underline-offset-4" rel="noopener">{c.t('cards.visit', { brand: b.name })}</a>}
+                {look?.href && <a href={safeHref(look.href)} className="mt-4 text-sm font-bold text-elixir underline underline-offset-4" rel="noopener">{c.t('cards.visit', { brand: b.name })}</a>}
               </div>
             </li>
           );

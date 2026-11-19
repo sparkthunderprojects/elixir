@@ -120,6 +120,8 @@ export interface BrandRow {
   name: string;
   brand_type: "owned" | "partner";
   earn_points_per_gbp: number | null;
+  max_order_gbp?: number | null;
+  daily_points_cap?: number | null;
   active: boolean;
   keys: KeyRow[];
 }
@@ -213,7 +215,7 @@ export const api = {
   referralSettings: () => rpc<ReferralSettings>("elixir_admin_referral_settings"),
   setReferralSettings: (p: Partial<ReferralSettings>) => rpc<void>("elixir_admin_set_referral_settings", { p }),
   settlements: () => rpc<SettlementRow[]>("elixir_admin_settlements"),
-  generateSettlements: (from: string, to: string) => rpc<{ created: number }>("elixir_admin_generate_settlements", { p_from: from, p_to: to }),
+  generateSettlements: (from: string, to: string) => rpc<{ created: number; skipped: number }>("elixir_admin_generate_settlements", { p_from: from, p_to: to }),
   issueSettlement: (id: string) => rpc<void>("elixir_admin_issue_settlement", { p_id: id }),
   paySettlement: (id: string) => rpc<void>("elixir_admin_mark_settlement_paid", { p_id: id }),
   trialBalance: () => rpc<TrialLine[]>("elixir_admin_trial_balance"),
@@ -241,7 +243,7 @@ export const api = {
   tiers: () => rpc<TierRow[]>("elixir_admin_tiers"),
   saveTier: (t: TierRow) => rpc<void>("elixir_admin_save_tier", { p: t }),
   brands: () => rpc<BrandRow[]>("elixir_admin_brands"),
-  saveBrand: (b: { id?: string; slug?: string; name: string; brand_type: string; earn_points_per_gbp: number | null; active: boolean }) =>
+  saveBrand: (b: { id?: string; slug?: string; name: string; brand_type: string; earn_points_per_gbp: number | null; active: boolean; max_order_gbp?: number | null; daily_points_cap?: number | null }) =>
     rpc<{ id: string }>("elixir_admin_save_brand", { p: b }),
   createKey: (brandId: string, label: string) => rpc<{ id: string; key: string }>("elixir_admin_create_key", { p_brand: brandId, p_label: label }),
   revokeKey: (keyId: string) => rpc<void>("elixir_admin_revoke_key", { p_key: keyId }),

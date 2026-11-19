@@ -55,7 +55,14 @@ export function BrandsView() {
               <div className="flex items-center justify-between gap-3 p-4">
                 <div>
                   <p className="font-semibold text-slate-900 dark:text-slate-100">{b.name} <span className="ml-1 text-xs font-normal text-slate-400">{b.slug} · {b.brand_type}</span></p>
-                  <p className="text-xs text-slate-500">Earn rate: {b.earn_points_per_gbp ?? "global default"} pts per £1</p>
+                  <p className="text-xs text-slate-500">Earn rate: {b.earn_points_per_gbp ?? "global default"} pts per £1 · Limits: {b.max_order_gbp == null ? "no" : `£${b.max_order_gbp}`} per order, {b.daily_points_cap == null ? "no" : b.daily_points_cap.toLocaleString("en-GB")} points per day
+                    <button onClick={() => {
+                      const o = prompt("Largest single order this brand can send, in £ (blank = no limit):", b.max_order_gbp == null ? "" : String(b.max_order_gbp));
+                      if (o === null) return;
+                      const d = prompt("Most points this brand can issue in one day (blank = no limit):", b.daily_points_cap == null ? "" : String(b.daily_points_cap));
+                      if (d === null) return;
+                      void act(() => api.saveBrand({ id: b.id, name: b.name, brand_type: b.brand_type, earn_points_per_gbp: b.earn_points_per_gbp, active: b.active, max_order_gbp: o.trim() === "" ? null : Number(o), daily_points_cap: d.trim() === "" ? null : Math.floor(Number(d)) }));
+                    }} className="ml-2 font-semibold text-rose-600 hover:underline">Edit limits</button></p>
                 </div>
                 <label className="flex items-center gap-2 text-sm text-slate-600">
                   {b.active ? "Active" : "Inactive"}
